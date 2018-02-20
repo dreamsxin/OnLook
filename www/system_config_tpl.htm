@@ -1,0 +1,159 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>系统设置 -<% $web_name %></title>
+<link href="css/inc.css" rel="stylesheet" type="text/css">
+<script src="js/tool.js" charset="utf-8" type="text/javascript" language="javascript"></script>
+</head>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+  	<td width="9" height="58" background="img/left_bg.gif">&nbsp;</td>
+  	<td colspan="2"><% include file="top_tpl.htm"%></td>
+  	<td width="8" background="img/right_bg.gif">&nbsp;</td>
+  </tr>
+  <tr>
+  	<td width="9" height="58" background="img/left_bg.gif">&nbsp;</td>
+    <td width="149" valign="top"> 
+      <% include file="left_tpl.htm"%>
+    </td>
+    <td valign="top">	
+		<% if $page_type=="alarms" %>
+		<table width="100%" border="0" cellpadding="0" cellspacing="0" class="body_table">		
+        <tr> 
+          <th colspan="5" align="left" class="body_th">[<a href="system_config.php?page_type=media">提醒方式</a>]&nbsp;&nbsp;[<a href="system_config.php?page_type=alarms" class="a_select">保存天数</a>]</th>
+        </tr>
+		<form action="system_config.php?action=update" method="post" id="history_form">
+        <tr> 
+          <td width="100" class="body_td_gray">告警保留天数：</td>
+          <td width="200" class="body_td_gray"><input name="alarm_history" type="text" id="alarm_history" class="text_input" value="<% $alarm_history %>" msg_name="告警保留天数" notnull="true" isnum="true"></td>
+          <td width="100" class="body_td_gray">提醒保留天数：</td>
+          <td width="200" class="body_td_gray"><input name="alert_history" type="text" id="alert_history" class="text_input" value="<% $alert_history %>" msg_name="提醒保留天数" notnull="true" isnum="true"></td>
+          <td class="body_td_gray"><input type="button" name="Submit" value="保存" class="button_input" onClick="dreams_ck_form('alarm_history,alert_history','history_form','alert')"></td>
+        </tr>
+		</form>
+      </table>
+      <table width="100%" height="6" border="0" cellpadding="0" cellspacing="0" class="img_table">
+        <tr>
+			<td><img src="img/onlook_76.gif" class="body_hr"></td>
+		  </tr>
+		</table>
+		<div class="right_hr"></div>
+		<% /if %>
+		<% if $page_type=="media" %>
+		<table width="100%" border="0" cellpadding="0" cellspacing="0" class="body_table">
+        <tr> 
+          <th colspan="3" align="left" class="body_th">[<a href="system_config.php?page_type=media" class="a_select">提醒方式</a>]&nbsp;&nbsp;[<a href="system_config.php?page_type=alarms">保存天数</a>]</th>
+        </tr>
+        <tr> 
+          <td width="200" class="body_td_gray">&nbsp;名称</td>
+          <td width="200" class="body_td_gray">&nbsp;类型</td>
+          <td class="body_td_gray">&nbsp;操作</td>
+        </tr>
+        <% foreach value=v key=k from=$arr_media_type %>
+        <tr> 
+          <td colspan="3" class="body_line"></td>
+        </tr>
+        <tr class="<% cycle values="body_td_gray_two,body_td_gray" %>"> 
+          <td>&nbsp;
+            <% $v[description] %>
+          </td>
+          <td>&nbsp;
+            <% if $v[type] eq '0' %>
+            邮件 Email
+            <% else %>
+            脚本调用
+            <% /if %>
+          </td>
+          <td>&nbsp;<span onClick="change_action('edit');change_type('<% $v[type] %>');date_edit('<% $v[mediatypeid] %>','<% $v[description] %>','<% $v[type] %>','<% $v[smtp_server] %>','<% $v[smtp_helo] %>','<% $v[smtp_email] %>','<% $v[exec_path] %>')" class="a_span">修改</span> 
+            / <a href="system_config.php?action=del&mediatypeid=<% $v[mediatypeid] %>">删除</a> 
+            / <span onClick="change_action('add');change_type('<% $v[type] %>');" class="a_span">添加</span></td>
+        </tr>
+        <% /foreach %>
+      </table> 
+      <table width="100%" height="6" border="0" cellpadding="0" cellspacing="0" class="img_table">
+        <tr>
+			<td><img src="img/onlook_76.gif" class="body_hr"></td>
+		  </tr>
+		</table>
+		<div class="right_hr"></div>
+		<table width="100%" border="0" cellpadding="0" cellspacing="0" class="body_table">
+        <tr> 
+          <th id="media_title" colspan="3" align="left" class="body_th">添加提醒方式</th>
+        </tr>
+		<form id="media_form" action="system_config.php?action=add" method="post">
+        <tr> 
+            <th width="200" class="body_td_gray">名称</th>
+          <td width="200" class="body_td_gray"><input name="description" type="text" id="description" class="text_input" msg_name="描述" notnull="true"></td>
+          <td class="body_td_gray">&nbsp;</td>
+        </tr>
+        <tr> 
+          <td colspan="3" class="body_line"></td>
+        </tr>
+        <tr> 
+          <th class="body_td_gray_two">类型</th>
+          <td class="body_td_gray_two"><select id="type" name="type" class="text_input" onChange="change_type(this.value)"><option value="0" selected>邮件Email</option><option value="1">脚本调用</option></select></td>
+          <td class="body_td_gray_two">&nbsp;</td>
+        </tr>
+        <tr dreams_id="media_0"> 
+          <td colspan="3" class="body_line"></td>
+        </tr>
+        <tr dreams_id="media_0"> 
+          <th width="200" class="body_td_gray">SMTP 服务器</th>
+          <td width="200" class="body_td_gray"><input name="smtp_server" type="text" id="smtp_server" class="text_input" msg_name="SMTP 服务器" notnull="true"></td>
+          <td class="body_td_gray">&nbsp;</td>
+        </tr>
+        <tr dreams_id="media_0"> 
+          <td colspan="3" class="body_line"></td>
+        </tr>
+        <tr dreams_id="media_0"> 
+          <th class="body_td_gray_two">SMTP helo</th>
+          <td class="body_td_gray_two"><input name="smtp_helo" type="text" id="smtp_helo" class="text_input" msg_name="SMTP helo" notnull="true"></td>
+          <td class="body_td_gray_two">&nbsp;</td>
+        </tr>
+        <tr dreams_id="media_0"> 
+          <td colspan="3" class="body_line"></td>
+        </tr>
+        <tr dreams_id="media_0"> 
+          <th width="200" class="body_td_gray">SMTP email</th>
+          <td width="200" class="body_td_gray"><input name="smtp_email" type="text" id="smtp_email" class="text_input" msg_name="SMTP email" notnull="true"></td>
+          <td class="body_td_gray">&nbsp;</td>
+        </tr>
+        <tr dreams_id="media_0"> 
+          <td colspan="3" class="body_line"></td>
+        </tr>
+        <tr dreams_id="media_1" style="display:none"> 
+            <th width="200" class="body_td_gray">脚本参数</th>
+          <td width="200" class="body_td_gray"><input name="exec_path" type="text" id="exec_path" class="text_input" msg_name="脚本参数" notnull="true"></td>
+          <td class="body_td_gray">&nbsp;</td>
+        </tr>
+        <tr dreams_id="media_1" style="display:none"> 
+          <td colspan="3" class="body_line"></td>
+        </tr>
+        <tr> 
+          <th class="body_td_gray_two">&nbsp;</th>
+          <td class="body_td_gray_two"><input name="media_btn" type="button" class="button_input" id="media_btn" onClick="dreams_ck_form('description','media_form','alert')" value="添加">
+              <input name="mediatypeid" type="hidden" id="mediatypeid"></td>
+          <td class="body_td_gray_two">&nbsp;</td>
+        </tr>
+		</form>
+      </table>
+      <table width="100%" height="6" border="0" cellpadding="0" cellspacing="0" class="img_table">
+        <tr>
+			<td><img src="img/onlook_76.gif" class="body_hr"></td>
+		  </tr>
+		</table>
+		<div class="right_hr"></div>
+		<% /if %>
+	</td>
+	<td width="8" background="img/right_bg.gif">&nbsp;</td>
+  </tr>
+  <tr>
+  	<td width="9" height="58" background="img/left_bg.gif">&nbsp;</td>
+  	<td colspan="2"><% include file="bottom_tpl.htm"%></td>
+  	<td width="8" background="img/right_bg.gif">&nbsp;</td>
+  </tr>
+</table>
+</body>
+</html>

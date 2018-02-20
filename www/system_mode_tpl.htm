@@ -1,0 +1,181 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>系统状态 -<% $web_name %></title>
+<link href="css/inc.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+  	<td width="9" height="58" background="img/left_bg.gif">&nbsp;</td>
+  	<td colspan="2"><% include file="top_tpl.htm"%></td>
+  	<td width="8" background="img/right_bg.gif">&nbsp;</td>
+  </tr>
+  <tr>
+  	<td width="9" height="58" background="img/left_bg.gif">&nbsp;</td>
+    <td width="149" valign="top"> 
+      <% include file="left_tpl.htm"%>
+    </td>
+    <td valign="top">
+	<% if $page_type=="system" %>
+	<table width="100%" border="0" cellpadding="0" cellspacing="0" class="body_table">
+      <tr>
+        <th colspan="2" align="left" class="body_th">[<a href="system_mode.php?page_type=system" class="a_select">系统状态</a>]&nbsp;&nbsp;[<a href="system_mode.php?page_type=host">设备状态</a>]&nbsp;&nbsp;[<a href="system_report.php?page_type=host">性能报表</a>]&nbsp;&nbsp;[<a href="system_health.php">健康性报告</a>]</th>
+      </tr>
+      <tr>
+        <td width="40%" class="body_td_gray">服务器运行状态</td>
+        <td align="left" class="body_td_gray"><span class="font_red">
+          <% $server_is_runing %>
+        </span></td>
+      </tr>
+      <tr>
+        <td colspan="2" class="body_line"></td>
+      </tr>
+      <tr>
+        <td class="body_td_gray_two">已储存数值个数</td>
+        <td class="body_td_gray_two"><span class="font_red">
+          <% $history_count %>
+        </span></td>
+      </tr>
+      <tr>
+        <td colspan="2" class="body_line"></td>
+      </tr>
+      <tr>
+        <td class="body_td_gray">已储存趋势个数</td>
+        <td class="body_td_gray"><span class="font_red">
+          <% $trends_count %>
+        </span></td>
+      </tr>
+      <tr>
+        <td colspan="2" class="body_line"></td>
+      </tr>
+      <tr>
+        <td class="body_td_gray_two">告警个数</td>
+        <td class="body_td_gray_two"><span class="font_red">
+          <% $alarms_count %>
+        </span></td>
+      </tr>
+      <tr>
+        <td colspan="2" class="body_line"></td>
+      </tr>
+      <tr>
+        <td class="body_td_gray">提醒条数</td>
+        <td class="body_td_gray"><span class="font_red">
+          <% $alerts_count %>
+        </span></td>
+      </tr>
+      <tr>
+        <td colspan="2" class="body_line"></td>
+      </tr>
+      <tr>
+        <td class="body_td_gray_two">告警设置个数 (已启用 / 已禁用)</td>
+        <td class="body_td_gray_two"><span class="font_red">
+          <% $triggers_count %>
+          (
+          <% $triggers_count_enabled %>
+          /
+          <% $triggers_count_disabled %>
+          )</span></td>
+      </tr>
+      <tr>
+        <td colspan="2" class="body_line"></td>
+      </tr>
+      <tr>
+        <td class="body_td_gray">数据源个数 (启用 / 未启用 / 不支持的 / 未知的)</td>
+        <td class="body_td_gray"><span class="font_red">
+          <% $items_count %>
+          (
+          <% $items_count_active %>
+          /
+          <% $items_count_not_active %>
+          /
+          <% $items_count_not_supported %>
+          /
+          <% $items_count_trapper %>
+          )</span></td>
+      </tr>
+      <tr>
+        <td colspan="2" class="body_line"></td>
+      </tr>
+      <tr>
+        <td class="body_td_gray_two">用户个数</td>
+        <td class="body_td_gray_two"><span class="font_red">
+          <% $users_count %>
+        </span></td>
+      </tr>
+      <tr>
+        <td colspan="2" class="body_line"></td>
+      </tr>
+      <tr>
+        <td class="body_td_gray">设备个数 (已监视 / 未监视)</td>
+        <td class="body_td_gray"><span class="font_red">
+          <% $hosts_count %>
+          (
+          <% $hosts_count_monitored %>
+          /
+          <% $hosts_count_not_monitored %>
+          )</span></td>
+      </tr>
+    </table>
+	<table width="100%" height="6" border="0" cellpadding="0" cellspacing="0" class="img_table">
+          <tr>
+			<td><img src="img/onlook_76.gif" class="body_hr"></td>
+		  </tr>
+	  </table>
+		<div class="right_hr"></div>
+		<% /if %>
+		<% if $page_type=="host" %>
+	  <table width="100%" border="0" cellpadding="0" cellspacing="0" class="body_table">
+        <tr> 
+          <th colspan="10" align="left" class="body_th">[<a href="system_mode.php?page_type=system">系统状态</a>]&nbsp;&nbsp;[<a href="system_mode.php?page_type=host" class="a_select">设备状态</a>]&nbsp;&nbsp;[<a href="system_report.php?page_type=host">性能报表</a>]&nbsp;&nbsp;[<a href="system_health.php">健康性报告</a>]</th>
+        </tr>
+        <tr> 
+          <td class="body_td_gray">&nbsp;设备名</td>
+          <td width="120" class="body_td_gray">&nbsp;IP地址</td>
+          <td width="60" class="body_td_gray">&nbsp;端口</td>
+          <td width="60" class="body_td_gray">&nbsp;状态</td>
+          <td class="body_td_gray">已监控对象个数</td>
+          <td class="body_td_gray">告警个数</td>
+          <td class="body_td_gray">性能</td>
+        </tr>
+        <% foreach value=v key=k from=$arr_hosts %>
+        <tr> 
+          <td colspan="10" class="body_line"></td>
+        </tr>
+        <tr class="<% cycle name=user_row values="body_td_gray_two,body_td_gray" %>"> 
+          <td>&nbsp;<% $v[host] %></td>
+          <td>&nbsp;<% $v[ip] %></td>
+          <td>&nbsp;<% $v[port] %></td>
+          <td>&nbsp; 
+            <% if $v[status]==0 %>
+            已监控 
+            <% elseif $v[status]==2 %>
+            未监控 
+            <% /if %>
+          </td>
+          <td>&nbsp;<A HREF="show_date.php?s_groupid=<% $v[groupid] %>&s_hostid=<% $v[hostid] %>"><% $v[items_count] %></A></td>
+          <td>&nbsp;<A HREF="alarms.php?s_groupid=<% $v[groupid] %>&s_hostid=<% $v[hostid] %>"><% $v[alarms_count] %></A></td>
+          <td><a href="host_performance.php?hostid=<% $v[hostid] %>">详细</a></td>
+        </tr>
+        <% /foreach %>
+      </table>
+		<table width="100%" height="6" border="0" cellpadding="0" cellspacing="0" class="img_table">
+          <tr>
+			<td><img src="img/onlook_76.gif" class="body_hr"></td>
+		  </tr>
+		</table>
+		<div class="right_hr"></div>
+		<% /if %>
+	</td>
+	<td width="8" background="img/right_bg.gif">&nbsp;</td>
+  </tr>
+  <tr>
+  	<td width="9" height="58" background="img/left_bg.gif">&nbsp;</td>
+  	<td colspan="2"><% include file="bottom_tpl.htm"%></td>
+  	<td width="8" background="img/right_bg.gif">&nbsp;</td>
+  </tr>
+</table>
+</body>
+</html>

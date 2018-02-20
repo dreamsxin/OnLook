@@ -1,0 +1,159 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>系统日志 -<% $web_name %></title>
+<link href="css/inc.css" rel="stylesheet" type="text/css">
+<script src="js/tool.js" charset="utf-8" type="text/javascript" language="javascript"></script>
+<script src="js/dreamsdiv.js" charset="utf-8" type="text/javascript" language="javascript"></script>
+<script>
+//dreams_page
+function dreams_page(curpage){
+	location.href="syslogs.php?dreams_curpage="+curpage+"&s_hostid=<% $s_hostid %>&s_groupid=<% $s_groupid %>&msg="+escape('<% $msg %>')+"&level=<% $level %>";
+}
+</script>
+</head>
+
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+  	<td width="9" height="58" background="img/left_bg.gif">&nbsp;</td>
+  	<td colspan="2"><% include file="top_tpl.htm"%></td>
+  	<td width="8" background="img/right_bg.gif">&nbsp;</td>
+  </tr>
+  <tr>
+  	<td width="9" height="58" background="img/left_bg.gif">&nbsp;</td>
+    <td width="149" valign="top"> 
+      <% include file="left_tpl.htm"%>
+    </td>
+    <td valign="top">
+	<!--主机列表-->
+		  	
+      <table border="0" cellpadding="0" cellspacing="0">
+        <tr>
+			<td valign="top"><div id="host_left_div">
+			  <table border="0" cellpadding="0" cellspacing="0" class="body_table" style="width:180px;height:100%;">
+                <tr><th align="left" class="body_th">主机列表</th></tr>
+			<% foreach value=v key=k from=$arr_hosts %>
+                <tr><td class="body_line"></td></tr>
+				<tr class="<% cycle values="body_td_gray,body_td_gray_two" %>"><td class="<% if $v[hostid]==$s_hostid %>body_td_gray_three<%/if%>">[<% $k|maths:1:"+" %>]<a href="syslogs.php?s_groupid=<% $v[groupid] %>&s_hostid=<% $v[hostid] %>" ><% $v[host] %><% if $v[status]==3 %>(模板)<% /if %></a></td></tr>
+			<% /foreach %>
+			</table></div></td>
+			<td width="16" valign="top" background="img/shut_bg.gif"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><img id="host_left_img" src="img/shut_top.gif" border="0" width="16" onClick="shut_host_left_div()"></td>
+  </tr>
+  <tr>
+    <td id="host_left_text" align="center">关闭</td>
+  </tr>
+  <tr>
+    <td align="center">主机列表</td>
+  </tr>
+</table></td>
+			<td width="100%" valign="top">
+	
+      <table width="100%" border="0" cellpadding="0" cellspacing="0" class="body_table">
+        <tr> 
+          <th align="left" class="body_th">日志列表(共
+            <% $alarms_count %>
+            条)</th>
+          <th align="right" class="body_th">搜索 日志内容： 
+            <input name="msg" type="text" class="text_input" id="msg" value="<% $msg %>"> 
+		  分组<select name="s_groupid" id="s_groupid" onChange="select_host(this.value)">
+                <% foreach value=v key=k from=$arr_groups %>
+                <option value="<% $v[groupid] %>" <% if $v[groupid]==$s_groupid %>selected<%/if%>><% $v[name] %></option>
+                <% /foreach %>
+              </select> 
+			  主机<select name="s_hostid" id="s_hostid" class="host_select">
+                <% foreach value=v key=k from=$arr_hosts %>
+				<% if $v[groupid]==$s_groupid or $s_groupid=="" %>
+				<option value="<% $v[hostid] %>" <% if $v[hostid]==$s_hostid %>selected<%/if%>><% $v[host] %><% if $v[status]==3 %>(模板)<% /if %></option>
+				<% /if %>
+				<% /foreach %>
+			  </select>
+			  <select name="import_hostid" id="import_hostid" style="display:none">
+                <% foreach value=v key=k from=$arr_hosts %>
+				<option groupid="<% $v[groupid] %>" value="<% $v[hostid] %>"><% $v[host] %><% if $v[status]==3 %>(模板)<% /if %></option>
+				<% /foreach %>
+              </select>
+            <input type="button" name="Submit" value="搜索" onClick="search_logs('syslogs.php')" class="button_input">
+          </th>
+        </tr>
+        <tr> 
+          <td colspan="2"> <div <% if $arr_alerts_count >17 %>style="height:480px;overflow-y:auto"<% /if %>> 
+              <table width="100%" border="0" cellpadding="0" cellspacing="0">
+                <tr> 
+                  <td class="body_td_gray">设备</td>
+                  <td class="body_td_gray">软件</td>
+                  <!--td class="body_td_gray">主机</td-->
+                  <td class="body_td_gray">内容</td>
+                  <td class="body_td_gray">级别</td>
+                  <td class="body_td_gray">优先级</td>
+                  <td class="body_td_gray">时间</td>
+                </tr>
+                <% if $arr_alarms_count > 0 %>
+                <% foreach value=v key=k from=$arr_alarms %>
+                <tr> 
+                  <td colspan="6" class="body_line"></td>
+                </tr>
+                <tr class="<% cycle name=group_row values="body_td_gray_two,body_td_gray" %>"> 
+                  <td> 
+                    <% $v[facility] %>
+                  </td>
+                  <!--td><% $v[expression]|explode_exp:1 %></td-->
+                  <td>
+                    <% $v[program] %>
+                  </td>
+                  <!--td>
+                    <% $v[host] %>
+                  </td-->
+                  <td>
+                    <% $v[msg] %>
+                  </td>
+                  <td> 
+                    <% $v[level] %>
+                  </td>
+                  <td>
+                    <% $v[priority] %>
+                  </td>
+                  <td> 
+                    <% $v[date] %> <% $v[time] %>
+                  </td>
+                </tr>
+                <% /foreach %>
+                <% else %>
+                <tr> 
+                  <td colspan="8" class="body_line"></td>
+                </tr>
+                <tr align="center" class="body_td_gray_two"> 
+                  <td colspan="10">&nbsp;目前还没有数据</td>
+                </tr>
+                <% /if %>
+              </table>
+            </div></td>
+        </tr>
+        <tr> 
+          <th colspan="2" align="right" class="body_th"> 
+            <% $pagination %>
+          </th>
+        </tr>
+      </table> 
+      <table width="100%" height="6" border="0" cellpadding="0" cellspacing="0" class="img_table">
+        <tr>
+			<td><img src="img/onlook_76.gif" class="body_hr"></td>
+		  </tr>
+		</table>
+		<div class="right_hr"></div>
+
+		</td></tr></table>
+		<!--主机列表结束-->	</td>
+	<td width="8" background="img/right_bg.gif">&nbsp;</td>
+  </tr>
+  <tr>
+  	<td width="9" height="58" background="img/left_bg.gif">&nbsp;</td>
+  	<td colspan="2"><% include file="bottom_tpl.htm"%></td>
+  	<td width="8" background="img/right_bg.gif">&nbsp;</td>
+  </tr>
+</table>
+</body>
+</html>

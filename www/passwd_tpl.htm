@@ -1,0 +1,221 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>个人设置 -<% $web_name %></title>
+<link href="css/inc.css" rel="stylesheet" type="text/css">
+<script src="js/tool.js" charset="utf-8" type="text/javascript" language="javascript"></script>
+</head>
+
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+  	<td width="9" height="58" background="img/left_bg.gif">&nbsp;</td>
+  	<td colspan="2"><% include file="top_tpl.htm"%></td>
+  	<td width="8" background="img/right_bg.gif">&nbsp;</td>
+  </tr>
+  <tr>
+  	<td width="9" height="58" background="img/left_bg.gif">&nbsp;</td>
+    <td width="149" valign="top"> 
+      <% include file="left_tpl.htm"%>
+    </td>
+    <td valign="top"> 
+	<% if $page_type=="info" %>
+	<table width="100%" border="0" cellpadding="0" cellspacing="0" class="body_table">
+        <tr> 
+          <th id="user_title" colspan="3" align="left" class="body_th">[<a href="passwd.php?page_type=info" class="a_select">基本信息</a>]&nbsp;&nbsp;[<a href="passwd.php?page_type=passwd">密码修改</a>]&nbsp;&nbsp;[<a href="passwd.php?page_type=media">提醒方式</a>]</th>
+        </tr>
+        <form id="user_form" action="passwd.php?action=info_edit" method="post">
+          <tr> 
+            <td height="4" colspan="3" class="body_line"></td>
+          </tr>
+          <tr> 
+            <th class="body_td_gray">姓名</th>
+            <td class="body_td_gray"><input name="name" type="text" class="text_input" id="name" value="<% $arr_users[name] %>" msg_name="姓名" notnull="true"></td>
+            <td class="body_td_gray">&nbsp;</td>
+          </tr>
+          <tr> 
+            <td colspan="3" class="body_line"></td>
+          </tr>
+          <tr> 
+            <th width="200" class="body_td_gray_two">职务</th>
+            <td width="200" class="body_td_gray_two"><input name="surname" type="text" class="text_input" id="surname" value="<% $arr_users[surname] %>" msg_name="职务" notnull="true"></td>
+            <td class="body_td_gray_two">&nbsp;</td>
+          </tr>
+          <tr> 
+            <td colspan="3" class="body_line"></td>
+          </tr>
+          <tr> 
+            <th class="body_td_gray">登陆时进入的默认页面</th>
+            <td class="body_td_gray"><input name="url" type="text" class="text_input" id="url" value="<% $arr_users[url] %>" msg_name="密码" notnull="true"></td>
+            <td class="body_td_gray">&nbsp;</td>
+          </tr>
+          <tr> 
+            <td colspan="3" class="body_line"></td>
+          </tr>
+          <tr> 
+            <th class="body_td_gray_two">&nbsp;</th>
+            <td class="body_td_gray_two"><input name="user_btn" type="button" class="button_input" id="user_btn" onClick="dreams_ck_form('name','user_form','alert')" value="修改"> </td>
+            <td class="body_td_gray_two">&nbsp;</td>
+          </tr>
+        </form>
+      </table>
+      <table width="100%" height="6" border="0" cellpadding="0" cellspacing="0" class="img_table">
+        <tr>
+			<td><img src="img/onlook_76.gif" class="body_hr"></td>
+		  </tr>
+		</table>
+		<div class="right_hr"></div>
+	<% /if %>
+	<% if $page_type=="passwd" %>
+      <table width="100%" border="0" cellpadding="0" cellspacing="0" class="body_table">
+        <tr> 
+          <th colspan="3" align="left" class="body_th">[<a href="passwd.php?page_type=info">基本信息</a>]&nbsp;&nbsp;[<a href="passwd.php?page_type=passwd" class="a_select">密码修改</a>]&nbsp;&nbsp;[<a href="passwd.php?page_type=media">提醒方式</a>]</th>
+        </tr>
+        <tr <% if $dreams_msg =='' %>style="display:none"<% /if %>> 
+          <th height="25" colspan="2" background="img/top_bg2.gif" class="font_white"> 
+            <% $dreams_msg %>
+          </th>
+          <th background="img/top_bg2.gif" class="font_white">&nbsp;</th>
+        </tr>
+        <form id="pwd_form" action="passwd.php?action=edit" method="post">
+          <tr> 
+            <th width="200" class="body_td_gray">原始密码</th>
+            <td width="200" class="body_td_gray"><input name="oldpwd" type="text" id="oldpwd" class="text_input" msg_name="原始密码" notnull="true"></td>
+            <td class="body_td_gray">&nbsp;</td>
+          </tr>
+          <tr> 
+            <th width="200" class="body_td_gray">新密码</th>
+            <td width="200" class="body_td_gray"><input name="passwd" type="text" id="passwd" class="text_input" msg_name="新密码" notnull="true"></td>
+            <td class="body_td_gray">&nbsp;</td>
+          </tr>
+          <tr> 
+            <td colspan="3" class="body_line"></td>
+          </tr>
+          <tr> 
+            <th class="body_td_gray_two">&nbsp;</th>
+            <td class="body_td_gray_two"><input name="pwd_btn" type="button" class="button_input" id="pwd_btn" onClick="dreams_ck_form('passwd','pwd_form','alert')" value="修改"> 
+            </td>
+            <td class="body_td_gray_two">&nbsp;</td>
+          </tr>
+        </form>
+      </table>
+      <table width="100%" height="6" border="0" cellpadding="0" cellspacing="0" class="img_table">
+        <tr>
+			<td><img src="img/onlook_76.gif" class="body_hr"></td>
+		  </tr>
+		</table>
+		<div class="right_hr"></div>
+	<% /if %>
+	<% if $page_type=="media" %>
+      <table width="100%" border="0" cellpadding="0" cellspacing="0" class="body_table">
+        <tr> 
+          <th colspan="5" align="left" class="body_th">[<a href="passwd.php?page_type=info">基本信息</a>]&nbsp;&nbsp;[<a href="passwd.php?page_type=passwd">密码修改</a>]&nbsp;&nbsp;[<a href="passwd.php?page_type=media" class="a_select">提醒方式</a>]</th>
+        </tr>
+        <tr> 
+          <td width="200" class="body_td_gray">&nbsp;提醒方式</td>
+          <td width="200" class="body_td_gray">&nbsp;接收地址</td>
+          <td class="body_td_gray">告警级别</td>
+          <td class="body_td_gray">是否启用</td>
+          <td class="body_td_gray">&nbsp;操作</td>
+        </tr>
+        <% foreach value=v key=k from=$arr_media %>
+        <tr> 
+          <td colspan="5" class="body_line"></td>
+        </tr>
+        <tr class="<% cycle name=group_row values="body_td_gray_two,body_td_gray" %>"> 
+          <td><% $v[description] %></td>
+          <td><% $v[sendto] %></td>
+          <td><% $v[severity]|severity:"&nbsp;" %></td>
+          <td><% if $v[active]==0 %>已启用<% else %>已禁用<% /if %></td>
+          <td>&nbsp;<span onClick="user_media_edit('<% $v[mediaid] %>','<% $v[mediatypeid] %>','<% $v[sendto] %>','<% $v[active] %>','<% $v[severity] %>','<% $userid %>')" class="a_span">修改</span> 
+            <a href="passwd.php?action=media_del&mediaid=<% $v[mediaid] %>">删除</a> 
+            <span onClick="user_media_add('<% $userid %>')" class="a_span">增加</span></td>
+        </tr>
+        <% /foreach %>
+      </table> 
+      <table width="100%" height="6" border="0" cellpadding="0" cellspacing="0" class="img_table">
+        <tr>
+			<td><img src="img/onlook_76.gif" class="body_hr"></td>
+		  </tr>
+		</table>
+		<div class="right_hr"></div>
+      <table width="100%" border="0" cellpadding="0" cellspacing="0" class="body_table">
+        <tr> 
+          <th id="media_title" colspan="2" align="left" class="body_th">添加提醒方式</th>
+        </tr>
+        <form id="media_form" action="passwd.php?action=media_add" method="post">
+          <tr> 
+            <th width="200" class="body_td_gray">提醒类型</th>
+            <td class="body_td_gray"> <select name="mediatypeid" id="mediatypeid">
+                <% foreach value=v key=k from=$arr_media_type %>
+                <option value="<% $v[mediatypeid] %>"> 
+                <% $v[description] %>
+                </option>
+                <% /foreach %>
+              </select></td>
+          </tr>
+          <tr> 
+            <td colspan="2" class="body_line"></td>
+          </tr>
+          <tr> 
+            <th class="body_td_gray_two">接收地址</th>
+            <td class="body_td_gray_two"><input name="sendto" type="text" id="sendto" class="text_input" msg_name="接收地址" notnull="true"> 
+            </td>
+          </tr>
+          <tr> 
+            <td colspan="2" class="body_line"></td>
+          </tr>
+          <tr style="display:none"> 
+            <th width="200" class="body_td_gray">告警级别</th>
+            <td class="body_td_gray"> <input name="severity0" type="checkbox" id="severity0" value="0" checked>
+              未分类 
+              <input name="severity1" type="checkbox" id="severity1" value="1" checked>
+              普通信息 
+              <input name="severity2" type="checkbox" id="severity2" value="2" checked>
+              警告 <input name="severity3" type="checkbox" id="severity3" value="3" checked>
+              一般告警 
+              <input name="severity4" type="checkbox" id="severity4" value="4" checked>
+              严重告警 
+              <input name="severity5" type="checkbox" id="severity5" value="5" checked>
+              重大告警
+              <input name="severity" type="hidden" id="severity"></td>
+          </tr>
+          <tr> 
+            <td colspan="2" class="body_line"></td>
+          </tr>
+          <tr> 
+            <th class="body_td_gray_two">是否启用</th>
+            <td class="body_td_gray_two"><select name="active" id="active">
+                <option value="0" selected>启用</option>
+                <option value="1">禁用</option>
+              </select> </td>
+          </tr>
+          <tr> 
+            <td colspan="2" class="body_line"></td>
+          </tr>
+          <tr> 
+            <th width="200" class="body_td_gray">&nbsp;</th>
+            <td class="body_td_gray">&nbsp; <input name="media_btn" type="button" class="button_input" id="media_btn" onClick="check_severity();dreams_ck_form('sendto,severity','media_form','alert')" value="添加"> 
+              <input name="mediaid" type="hidden" id="mediaid"></td>
+          </tr>
+        </form>
+      </table>
+      <table width="100%" height="6" border="0" cellpadding="0" cellspacing="0" class="img_table">
+        <tr>
+			<td><img src="img/onlook_76.gif" class="body_hr"></td>
+		  </tr>
+		</table>
+		<div class="right_hr"></div>
+		<% /if %>
+	</td>
+	<td width="8" background="img/right_bg.gif">&nbsp;</td>
+  </tr>
+  <tr>
+  	<td width="9" height="58" background="img/left_bg.gif">&nbsp;</td>
+  	<td colspan="2"><% include file="bottom_tpl.htm"%></td>
+  	<td width="8" background="img/right_bg.gif">&nbsp;</td>
+  </tr>
+</table>
+</body>
+</html>

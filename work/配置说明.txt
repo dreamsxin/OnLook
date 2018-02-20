@@ -1,0 +1,9 @@
+OnLook项目php主要目录：
+framework	php类函数程序
+www		php页面程序
+
+cache		缓存文件夹 在framework\smarty_light.inc.php 文件中配置
+
+数据库		在framework\conn.inc.php 文件中配置
+---------
+linux 注意把 cache目录的权限设置为 可读写 chown -R dreams:group /home/dreams

@@ -1,0 +1,189 @@
+/*
+使用中有任何疑问请联系
+2006年8月18日 紫痕 msn:zise_xin@hotmail.com
+*/
+
+tr, td {
+	font-family: "Arial";
+	font-size: 12px;
+}
+
+body {
+	font-family: "Arial";
+	font-size: 12px;
+	margin: 0px;
+	padding: 0px;
+	background-image: url(../img/bg.gif);
+
+
+}
+table {
+	font-family: "Arial";
+	font-size: 12px;
+	word-warp:break-word;
+	word-break:break-all;
+}
+a, a:active, a:visited {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+.a_select {
+	cursor: pointer;
+	color: #FF0000;
+	font-family: "Arial", "Helvetica", "sans-serif";
+
+
+}
+
+.a_span {
+	cursor: pointer;
+	color: #0033FF;
+
+}
+
+.font_white {
+	color: #FFFFFF;
+}
+
+.font_red {
+	color: #CF2218;
+	font-weight: normal;
+	text-decoration: underline;
+}
+.font_yellow {
+	color: #FF6600;
+	font-weight: normal;
+	text-decoration: underline;
+}
+.font_error {
+	font-size: 18px;
+	color: #FF0000;
+}
+.e_font {
+	font-family: "宋体";
+	font-size: 14px;
+}
+.text_input {
+	color: #666666;
+	text-decoration: none;
+	border: 1px solid #666666;
+	margin: 0px;
+	padding: 0px;
+	background-color: #CCCCCC;
+
+
+
+}
+.disabled_input {
+	color: #999999;
+	text-decoration: none;
+	border: 1px solid #999999;
+	margin: 0px;
+	padding: 0px;
+	background-color: #C3C3C3;
+}
+select {
+	color: #666666;
+	text-decoration: none;
+	border: 1px solid #666666;
+	margin: 0px;
+	padding: 0px;
+	background-color: #CCCCCC;
+}
+.button_input {
+	background-color: #FA7236;
+	border: 1px solid #000000;
+	color: #FFFFFF;
+	margin: 0px;
+	padding: 0px;
+	height: 18px;
+
+
+
+
+}
+.left_hr {
+	margin: 0px;
+	padding: 2px;
+	border: 0px none;
+}
+.right_hr {
+	margin: 0px;
+	padding: 1px;
+	border: 0px none;
+}
+.body_hr {
+	height: 6px;
+	width: 100%;
+	margin: 0px;
+	padding: 0px;
+
+}
+.body_table {
+	margin: 0px 0px 0px 2px;
+	border: 5px solid #FFFFFF;
+	background-color: #FFFFFF;
+
+}
+
+img {
+	border: 0px;
+}
+.img_table {
+	margin: 0px 0px 0px 2px;
+	border-top: 0px;
+	border-right: 0px;
+	border-bottom: 0px;
+	border-left: 0px;
+
+}
+.body_th {
+	background-color: #FFFFFF;
+	height: 22px;
+
+}
+.body_td {
+	background-color: #B9B9B9;
+}
+.body_td_blue {
+	background-color: #008BBE;
+	height: 18px;
+	color: #FFFFFF;
+}
+.body_td_red {
+	background-color: #FA773E;
+	height: 18px;
+	color: #FFFFFF;
+}
+.body_td_gray_two {
+	height: 25px;
+	background-image: url(../img/bg.gif);
+
+}
+.body_td_gray_three {
+	height: 25px;
+	background-color: #FF6633;
+
+}
+.body_td_gray {
+	background-color: #B9B9B9;
+	height: 25px;
+}
+.body_td_gray_error {
+	height: 100px;
+	background-color: #B9B9B9;
+	color: #FFFFFF;
+	vertical-align: middle;
+}
+.body_line {
+	background-color: #FFFFFF;
+	height: 2px;
+}
+
+.host_select {
+	width: 200px;
+}

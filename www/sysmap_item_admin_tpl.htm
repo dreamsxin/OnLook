@@ -1,0 +1,326 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>设置 -<% $web_name %></title>
+<link href="css/inc.css" rel="stylesheet" type="text/css">
+<script src="js/tool.js" charset="utf-8" type="text/javascript" language="javascript"></script>
+<script src="js/dreamsdiv.js" charset="utf-8" type="text/javascript" language="javascript"></script>
+</head>
+
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+  	<td width="9" height="58" background="img/left_bg.gif">&nbsp;</td>
+  	<td colspan="2"><% include file="top_tpl.htm"%></td>
+  	<td width="8" background="img/right_bg.gif">&nbsp;</td>
+  </tr>
+  <tr>
+  	<td width="9" height="58" background="img/left_bg.gif">&nbsp;</td>
+    <td width="149" valign="top"> 
+      <% include file="left_tpl.htm"%>
+    </td>
+    <td valign="top"> 
+      <table width="100%" border="0" cellpadding="0" cellspacing="0" class="body_table">
+        <tr> 
+          <th align="left" class="body_th">网络图表</th>
+        </tr>
+        <tr> 
+          <td class="body_td_gray"><% $map_img %></td>
+        </tr>
+      </table> 
+      <table width="100%" height="6" border="0" cellpadding="0" cellspacing="0" class="img_table">
+        <tr>
+			<td><img src="img/onlook_76.gif" class="body_hr"></td>
+		  </tr>
+		</table>
+		<div class="right_hr"></div>
+		
+      <table width="100%" border="0" cellpadding="0" cellspacing="0" class="body_table">
+        <tr> 
+          <th colspan="7" align="left" class="body_th">主机列表</th>
+        </tr>
+        <tr> 
+          <td class="body_td_gray">&nbsp;主机</td>
+          <td class="body_td_gray">标签</td>
+          <td width="70" class="body_td_gray">X</td>
+          <td class="body_td_gray">Y</td>
+          <td class="body_td_gray">图标(关/开)</td>
+          <td class="body_td_gray">操作</td>
+        </tr>
+        <% foreach value=v key=k from=$arr_host %>
+        <tr> 
+          <td colspan="7" class="body_line"></td>
+        </tr>
+        <tr class="<% cycle name=group_row values="body_td_gray_two,body_td_gray" %>"> 
+          <td>&nbsp;<% $v[host] %></td>
+          <td><% $v[label] %></td>
+          <td><% $v[x] %></td>
+          <td><% $v[y] %></td>
+          <td><% $v[icon] %></td>
+          <td><span class="a_span" onClick="shost_edit('<% $v[shostid] %>','<% $v[hostid] %>','<% $v[label] %>','<% $v[x] %>','<% $v[y] %>','<% $v[icon] %>','<% $v[icon_on] %>','<% $v[url] %>','<% $sysmapid %>')">修改</span><a href="javascript:check_do('del','','sysmap_item_admin.php?action=shost_del&sysmapid=<% $sysmapid %>&shostid=<% $v[shostid] %>');">删除</a> <span class="a_span" onClick="shost_add('<% $sysmapid %>')">添加</span></td>
+        </tr>
+        <% /foreach %>
+      </table>
+      <table width="100%" height="6" border="0" cellpadding="0" cellspacing="0" class="img_table">
+        <tr>
+			<td><img src="img/onlook_76.gif" class="body_hr"></td>
+		  </tr>
+		</table>
+		<div class="right_hr"></div>
+      <table width="100%" border="0" cellpadding="0" cellspacing="0" class="body_table">
+        <tr> 
+          <th height="24" colspan="3" align="left" class="body_th" id="shost_title">添加主机</th>
+        </tr>
+        <form id="shost_form" action="sysmap_item_admin.php?action=shost_add&sysmapid=<% $sysmapid %>" method="post">
+          <tr> 
+            <th width="200" class="body_td_gray">主机</th>
+            <td width="300" class="body_td_gray"><select name="hostid" id="hostid">
+                <% foreach value=v key=k from=$arr_hosts %>
+                <option value="<% $v[hostid] %>">
+                <% $v[host] %>
+                </option>
+                <% /foreach %>
+              </select></td>
+            <td class="body_td_gray">&nbsp;</td>
+          </tr>
+          <tr> 
+            <td height="4" colspan="3" class="body_line"></td>
+          </tr>
+          <tr style="display:none"> 
+            <th class="body_td_gray_two">图标(关)</th>
+            <td class="body_td_gray_two"><select name="icon" id="icon">
+              </select></td>
+            <td align="left" class="body_td_gray_two">&nbsp;</td>
+          </tr>
+          <tr style="display:none"> 
+            <td colspan="3" class="body_line"></td>
+          </tr>
+          <tr style="display:none"> 
+            <th width="200" class="body_td_gray">图标(开)</th>
+            <td width="300" class="body_td_gray"><select name="icon_on" id="icon_on">
+              </select></td>
+            <td class="body_td_gray">&nbsp;</td>
+          </tr>
+          <tr style="display:none"> 
+            <td colspan="3" class="body_line"></td>
+          </tr>
+          <tr> 
+            <th class="body_td_gray_two">标签</th>
+            <td class="body_td_gray_two"><input name="label" type="text" class="text_input" id="label" msg_name="标签" notnull="true"></td>
+            <td align="left" class="body_td_gray_two">&nbsp;</td>
+          </tr>
+          <tr> 
+            <td colspan="3" class="body_line"></td>
+          </tr>
+          <tr> 
+            <th class="body_td_gray">坐标X</th>
+            <td class="body_td_gray"><input name="x" type="text" class="text_input" id="x" value="0" msg_name="坐标X" notnull="true" isnum="true"></td>
+            <td align="left" class="body_td_gray">&nbsp;</td>
+          </tr>
+          <tr> 
+            <td colspan="3" class="body_line"></td>
+          </tr>
+          <tr> 
+            <th class="body_td_gray_two">坐标Y</th>
+            <td class="body_td_gray_two"><input name="y" type="text" class="text_input" id="y" value="0" msg_name="坐标Y" notnull="true" isnum="true"></td>
+            <td align="left" class="body_td_gray_two">&nbsp;</td>
+          </tr>
+          <tr> 
+            <td colspan="3" class="body_line"></td>
+          </tr>
+          <tr> 
+            <th class="body_td_gray">URL</th>
+            <td class="body_td_gray"><input name="url" type="text" class="text_input" id="url" msg_name="url" notnull="true"></td>
+            <td align="left" class="body_td_gray">&nbsp;</td>
+          </tr>
+          <tr> 
+            <td colspan="3" class="body_line"></td>
+          </tr>
+          <tr> 
+            <th class="body_td_gray_two">&nbsp;</th>
+            <td class="body_td_gray_two"><input name="shost_btn" type="button" class="button_input" id="shost_btn" onClick="dreams_ck_form('label,x,y','shost_form','alert')" value="添加"> 
+              <input name="shostid" type="hidden" id="shostid"></td>
+            <td class="body_td_gray_two">&nbsp;</td>
+          </tr>
+        </form>
+      </table>
+      <table width="100%" height="6" border="0" cellpadding="0" cellspacing="0" class="img_table">
+        <tr>
+			<td><img src="img/onlook_76.gif" class="body_hr"></td>
+		  </tr>
+		</table>
+		<div class="right_hr"></div>
+		
+      <table width="100%" border="0" cellpadding="0" cellspacing="0" class="body_table">
+        <tr> 
+          <th colspan="7" align="left" class="body_th">主机连接线列表</th>
+        </tr>
+        <tr> 
+          <td class="body_td_gray">&nbsp;主机1</td>
+          <td class="body_td_gray">主机2</td>
+          <td class="body_td_gray">连线开关条件</td>
+          <td class="body_td_gray">类型(关)</td>
+          <td class="body_td_gray">颜色(关)</td>
+          <td class="body_td_gray">类型(开)</td>
+          <td class="body_td_gray">颜色(开)</td>
+          <td class="body_td_gray">操作</td>
+        </tr>
+        <% foreach value=v key=k from=$arr_links %>
+        <tr> 
+          <td colspan="9" class="body_line"></td>
+        </tr>
+        <tr class="<% cycle name=group_row values="body_td_gray_two,body_td_gray" %>"> 
+          <td>&nbsp;<% $v[label1] %></td>
+          <td><% $v[label2] %></td>
+          <td><% $v[description] %></td>
+          <td><% $v[drawtype_off] %></td>
+          <td><% $v[color_off] %></td>
+		  <td><% $v[drawtype_on] %></td>
+		  <td><% $v[color_on] %></td>
+          <td><span class="a_span" onClick="link_edit('<% $v[linkid] %>','<% $v[shostid1] %>','<% $v[shostid2] %>','<% $v[triggerid] %>','<% $v[drawtype_off] %>','<% $v[color_off] %>','<% $v[drawtype_on] %>','<% $v[color_on] %>','<% $sysmapid %>')">修改</span> <a href="javascript:check_do('del','','sysmap_item_admin.php?action=link_del&sysmapid=<% $sysmapid %>&linkid=<% $v[linkid] %>');">删除</a> <span class="a_span" onClick="link_add('<% $sysmapid %>')">添加</span></td>
+        </tr>
+        <% /foreach %>
+      </table>
+      <table width="100%" height="6" border="0" cellpadding="0" cellspacing="0" class="img_table">
+        <tr>
+			<td><img src="img/onlook_76.gif" class="body_hr"></td>
+		  </tr>
+		</table>
+		<div class="right_hr"></div>
+      <table width="100%" border="0" cellpadding="0" cellspacing="0" class="body_table">
+        <tr> 
+          <th height="24" colspan="3" align="left" class="body_th" id="link_title">添加主机连接线</th>
+        </tr>
+        <form id="link_form" action="sysmap_item_admin.php?action=link_add&sysmapid=<% $sysmapid %>" method="post">
+          <tr> 
+            <th width="200" class="body_td_gray">主机1</th>
+            <td width="300" class="body_td_gray"><select name="shostid1" id="shostid1" msg_name="主机1" notnull="true" link="shostid2" linktype="key">
+                <% foreach value=v key=k from=$arr_host %>
+                <option value="<% $v[shostid] %>">
+                <% $v[label] %> -- <% $v[host] %>
+                </option>
+                <% /foreach %>
+              </select></td>
+            <td class="body_td_gray">&nbsp;</td>
+          </tr>
+          <tr> 
+            <td height="4" colspan="3" class="body_line"></td>
+          </tr>
+          <tr> 
+            <th class="body_td_gray_two">主机2</th>
+            <td class="body_td_gray_two"><select name="shostid2" id="shostid2" msg_name="主机2">
+                <% foreach value=v key=k from=$arr_host %>
+                <option value="<% $v[shostid] %>"> 
+                <% $v[label] %> -- <% $v[host] %>
+                </option>
+                <% /foreach %>
+              </select></td>
+            <td align="left" class="body_td_gray_two">&nbsp;</td>
+          </tr>
+          <tr> 
+            <td colspan="3" class="body_line"></td>
+          </tr>
+          <tr> 
+            <th width="200" class="body_td_gray">连接开关条件</th>
+            <td width="300" class="body_td_gray"><select name="triggerid" id="triggerid">
+				<option value="">无</option>
+                <% foreach value=v key=k from=$arr_triggers %>
+				<option value="<% $v[triggerid] %>"><% $v[host] %> &nbsp;&nbsp;&nbsp;&nbsp;-- <% $v[description] %></option>
+				<% /foreach %>
+              </select></td>
+            <td class="body_td_gray">&nbsp;</td>
+          </tr>
+          <tr> 
+            <td colspan="3" class="body_line"></td>
+          </tr>
+          <tr> 
+            <th class="body_td_gray_two">类型 (关)</th>
+            <td class="body_td_gray_two"><select name="drawtype_off" id="drawtype_off">
+                <option value="0">Line 直线</option>
+                <option value="2">Bold line 粗直线</option>
+                <option value="4">Dashed line 虚直线</option>
+              </SELECT></td>
+            <td align="left" class="body_td_gray_two">&nbsp;</td>
+          </tr>
+          <tr> 
+            <td colspan="3" class="body_line"></td>
+          </tr>
+          <tr> 
+            <th height="26" class="body_td_gray">颜色 (关)</th>
+            <td class="body_td_gray"><select name="color_off" id="color_off">
+                <option value="Black">黑</option>
+                <option value="Blue">蓝</option>
+                <option value="Cyan">青</option>
+                <option value="Dark Blue">深蓝</option>
+                <option value="Dark Green">暗绿</option>
+                <option value="Dark Red">暗红</option>
+                <option value="Dark Yellow">暗黄</option>
+                <option value="Green">绿</option>
+                <option value="Red">红</option>
+                <!-- option value="White">白</option -->
+                <option value="Yellow">黄</option>
+              </SELECT></td>
+            <td align="left" class="body_td_gray">&nbsp;</td>
+          </tr>
+          <tr> 
+            <td colspan="3" class="body_line"></td>
+          </tr>
+          <tr> 
+            <th class="body_td_gray_two">类型 (开)</th>
+            <td class="body_td_gray_two"><select name="drawtype_on" id="drawtype_on">
+                <option value="0">Line 直线</option>
+                <option value="2">Bold line 粗直线</option>
+                <option value="4">Dashed line 虚直线</option>
+              </SELECT></td>
+            <td align="left" class="body_td_gray_two">&nbsp;</td>
+
+          </tr>
+          <tr> 
+            <td colspan="3" class="body_line"></td>
+          </tr>
+          <tr> 
+            <th class="body_td_gray">颜色 (开)</th>
+            <td class="body_td_gray"><select name="color_on" id="color_on">
+                <option value="Black">黑</option>
+                <option value="Blue">蓝</option>
+                <option value="Cyan">青</option>
+                <option value="Dark Blue">深蓝</option>
+                <option value="Dark Green">暗绿</option>
+                <option value="Dark Red">暗红</option>
+                <option value="Dark Yellow">暗黄</option>
+                <option value="Green">绿</option>
+                <option value="Red">红</option>
+                <!-- option value="White">白</option -->
+                <option value="Yellow">黄</option>
+              </SELECT></td>
+            <td align="left" class="body_td_gray">&nbsp;</td>
+          </tr>
+          <tr> 
+            <td colspan="3" class="body_line"></td>
+          </tr>
+          <tr> 
+            <th class="body_td_gray_two">&nbsp;</th>
+            <td class="body_td_gray_two"><input name="link_btn" type="button" class="button_input" id="link_btn" onClick="dreams_ck_form('shostid1,shostid2','link_form','alert')" value="添加"> 
+              <input name="linkid" type="hidden" id="linkid"></td>
+            <td class="body_td_gray_two">&nbsp;</td>
+          </tr>
+        </form>
+      </table>
+      <table width="100%" height="6" border="0" cellpadding="0" cellspacing="0" class="img_table">
+        <tr>
+			<td><img src="img/onlook_76.gif" class="body_hr"></td>
+		  </tr>
+		</table>
+		<div class="right_hr"></div>
+	</td>
+	<td width="8" background="img/right_bg.gif">&nbsp;</td>
+  </tr>
+  <tr>
+  	<td width="9" height="58" background="img/left_bg.gif">&nbsp;</td>
+  	<td colspan="2"><% include file="bottom_tpl.htm"%></td>
+  	<td width="8" background="img/right_bg.gif">&nbsp;</td>
+  </tr>
+</table>
+</body>
+</html>

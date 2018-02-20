@@ -1,0 +1,142 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>设置 -<% $web_name %></title>
+<link href="css/inc.css" rel="stylesheet" type="text/css">
+<script src="js/tool.js" charset="utf-8" type="text/javascript" language="javascript"></script>
+<script src="js/dreamsdiv.js" charset="utf-8" type="text/javascript" language="javascript"></script>
+</head>
+
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+  	<td width="9" height="58" background="img/left_bg.gif">&nbsp;</td>
+  	<td colspan="2"><% include file="top_tpl.htm"%></td>
+  	<td width="8" background="img/right_bg.gif">&nbsp;</td>
+  </tr>
+  <tr>
+  	<td width="9" height="58" background="img/left_bg.gif">&nbsp;</td>
+    <td width="149" valign="top"> 
+      <% include file="left_tpl.htm"%>
+    </td>
+    <td valign="top"> 
+      <table width="100%" border="0" cellpadding="0" cellspacing="0" class="body_table">
+        <tr> 
+          <th colspan="2" align="left" class="body_th">对照表图表</th>
+        </tr>
+        <tr> 
+          <td class="body_td_gray"><% $screen_html %></td>
+        </tr>
+      </table> 
+      <table width="100%" height="6" border="0" cellpadding="0" cellspacing="0" class="img_table">
+        <tr>
+			<td><img src="img/onlook_76.gif" class="body_hr"></td>
+		  </tr>
+		</table>
+		<div class="right_hr"></div>
+      <table width="100%" border="0" cellpadding="0" cellspacing="0" class="body_table">
+        <tr> 
+          <th height="24" colspan="3" align="left" class="body_th" id="screen_item_title">修改对照表图表</th>
+        </tr>
+        <form id="screen_item_form" action="screen_item_admin.php?action=edit&screenid=<% $screenid %>" method="post">
+          <tr> 
+            <th width="200" class="body_td_gray">所要修改的表格位置</th>
+            <td width="300" class="body_td_gray">
+<select name="y" id="y" onChange="change_screen_item_yx()">
+<% for value=v start=0 step=1 stop = $arr_screens[rows] %>
+<option value="<% $v %>">行<% $v|maths:1:'+' %></option>
+<% /for %>
+</select>
+<select name="x" id="x" onChange="change_screen_item_yx()">
+<% for value=v start=0 step=1 stop = $arr_screens[cols] %>
+<option value="<% $v %>">列<% $v|maths:1:'+' %></option>
+<% /for %>
+              </select></td>
+            <td class="body_td_gray">&nbsp;</td>
+          </tr>
+          <tr> 
+            <td height="4" colspan="3" class="body_line"></td>
+          </tr>
+          <tr> 
+            <th class="body_td_gray_two">图表类型</th>
+            <td class="body_td_gray_two"><select id="resource" name="resource" onChange="change_resoure(this.value)">
+                <option value="0" <% if $resource==0 %>selected<% /if %>>图表</option>
+                <option value="1" <% if $resource==1 %>selected<% /if %>>简单图表</option>
+                <option value="2" <% if $resource==2 %>selected<% /if %>>地图</option>
+                <option value="3" <% if $resource==3 %>selected<% /if %>>简单文本</option>
+              </SELECT></td>
+            <td align="left" class="body_td_gray_two">&nbsp;</td>
+          </tr>
+          <tr> 
+            <td colspan="3" class="body_line"></td>
+          </tr>
+          <tr> 
+            <th width="200" class="body_td_gray">图表</th>
+            <td width="300" class="body_td_gray">
+			<select name="sysmapid" id="sysmapid" <% if $resource!=2 %>style="display:none"<% /if %>>
+                <option value="0">没有设置</option>
+				<% foreach value=v key=k from=$arr_sysmaps %>
+                <option value="<% $v[sysmapid] %>" <% if $resourceid==$v[sysmapid] %>selected<% /if %>><% $v[name] %></option>
+				<% /foreach %>
+            </select>
+			<select name="graphid" id="graphid" <% if $resource!=0 %>style="display:none"<% /if %>>
+				<option value="0">没有设置</option>
+				<% foreach value=v key=k from=$arr_graphs %>
+                <option value="<% $v[graphid] %>" <% if $resourceid==$v[graphid] %>selected<% /if %>><% $v[name] %></option>
+				<% /foreach %>
+            </select>
+			<select name="itemid" id="itemid" <% if $resource!=1 && $resource!=3 %>style="display:none"<% /if %>>
+				<option value="0">没有设置</option>
+				<% foreach value=v key=k from=$arr_items %>
+                <option value="<% $v[itemid] %>" <% if $resourceid==$v[itemid] %>selected<% /if %>><% $v[host] %>&nbsp;&nbsp;&nbsp;&nbsp;--<% $v[description] %></option>
+				<% /foreach %>
+            </select></td>
+            <td class="body_td_gray">&nbsp;</td>
+          </tr>
+          <tr> 
+            <td colspan="3" class="body_line"></td>
+          </tr>
+          <tr> 
+            <th class="body_td_gray_two">宽度</th>
+            <td class="body_td_gray_two"><input name="width" type="text" class="text_input" id="width" value="<% $width %>" msg_name="宽度" isnum="true" notnull="true"> 
+            </td>
+            <td align="left" class="body_td_gray_two">(0默认值)</td>
+          </tr>
+          <tr> 
+            <td colspan="3" class="body_line"></td>
+          </tr>
+          <tr> 
+            <th class="body_td_gray">高度</th>
+            <td class="body_td_gray"><input name="height" type="text" class="text_input" id="height" value="<% $height %>" msg_name="高度" isnum="true" notnull="true"> 
+            </td>
+            <td align="left" class="body_td_gray">(0默认值)</td>
+          </tr>
+          <tr> 
+            <td colspan="3" class="body_line"></td>
+          </tr>
+          <tr> 
+            <th class="body_td_gray_two">&nbsp;</th>
+            <td class="body_td_gray_two"><input name="screen_item_btn" type="button" class="button_input" id="screen_item_btn" onClick="dreams_ck_form('width,height','screen_item_form','alert')" value="修改"> 
+              <input name="screenitemid" type="hidden" id="screenitemid" value="<% $screenitemid%>"></td>
+            <td class="body_td_gray_two">&nbsp;</td>
+          </tr>
+        </form>
+      </table>
+      <table width="100%" height="6" border="0" cellpadding="0" cellspacing="0" class="img_table">
+        <tr>
+			<td><img src="img/onlook_76.gif" class="body_hr"></td>
+		  </tr>
+		</table>
+		<div class="right_hr"></div>
+	</td>
+	<td width="8" background="img/right_bg.gif">&nbsp;</td>
+  </tr>
+  <tr>
+  	<td width="9" height="58" background="img/left_bg.gif">&nbsp;</td>
+  	<td colspan="2"><% include file="bottom_tpl.htm"%></td>
+  	<td width="8" background="img/right_bg.gif">&nbsp;</td>
+  </tr>
+</table>
+</body>
+</html>

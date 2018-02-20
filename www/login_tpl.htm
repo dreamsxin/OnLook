@@ -1,0 +1,50 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>OnLook监控系统登录</title>
+<link href="css/inc.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<br>
+<table width="271" border="0" align="center" cellpadding="0" cellspacing="0">
+  <tr>
+    <th></th>
+  </tr>
+  <tr> 
+    <th align="left" background="img/top_bg.gif"><img src="img/top.gif" width="238" height="60" alt=""></th>
+  </tr>
+  <tr>
+    <th align="left" background="img/top_bg2.gif" class="font_white">&nbsp; 
+      <% $msg %>
+    </th>
+  </tr>
+</table>
+  <table border="0" align="center" cellpadding="0" cellspacing="0" width="271" height="102" background="img/login_bg.gif">
+   <form id="login_form" action="login.php?action=login" method="post">
+    <tr> 
+      <th colspan="2" height="6"></th>
+    </tr>
+    <tr> 
+      <td colspan="2" class="font_white">&nbsp;&nbsp;&nbsp;&nbsp;请输入OnLook的用户名和密码:</td>
+    </tr>
+    <tr> 
+      <th width="70" height="20" align="right" class="font_white">用户名：</th>
+      <td><input name="alias" type="text" id="alias" class="text_input"></td>
+    </tr>
+    <tr> 
+      <th height="20" align="right" class="font_white">密码：</th>
+      <td><input name="passwd" type="password" id="passwd" class="text_input"></td>
+    </tr>
+    <tr> 
+      <th>&nbsp;</th>
+      <td><input type="submit" name="Submit" value="登录" class="button_input"></td>
+    </tr>
+    <tr> 
+      <th colspan="2" style="height:8px"></th>
+    </tr>
+	</form>
+  </table>	
+</body>
+</html>

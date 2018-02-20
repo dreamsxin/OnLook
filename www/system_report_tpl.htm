@@ -1,0 +1,254 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>报表 -<% $web_name %></title>
+<link href="css/inc.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="9" height="58" background="img/left_bg.gif">&nbsp;</td>
+<td colspan="2"><% include file="top_tpl.htm"%></td>
+<td width="8" background="img/right_bg.gif">&nbsp;</td>
+</tr>
+<tr>
+<td width="9" height="58" background="img/left_bg.gif">&nbsp;</td>
+<td width="149" valign="top"> 
+<% include file="left_tpl.htm"%>
+</td>
+<td valign="top">
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="body_table">
+<tr> 
+<th colspan="2" align="left" class="body_th">[<a href="system_mode.php?page_type=system">系统状态</a>]&nbsp;&nbsp;[<a href="system_mode.php?page_type=host">设备状态</a>]&nbsp;&nbsp;[<a href="system_report.php?page_type=host" class="a_select">性能报表</a>]&nbsp;&nbsp;[<a href="system_health.php">健康性报告</a>]</th>
+</tr>
+<tr> 
+<td width="250" class="body_td_gray_two">告警个数</td>
+<td class="body_td_gray_two"><span class="font_red"> 
+<% $alarms_count %>
+</span></td>
+</tr>
+<tr> 
+<td colspan="2" class="body_line"></td>
+</tr>
+<tr> 
+<td class="body_td_gray">提醒条数</td>
+<td class="body_td_gray"><span class="font_red"> 
+<% $alerts_count %>
+</span></td>
+</tr>
+<tr> 
+<td colspan="2" class="body_line"></td>
+</tr>
+<tr> 
+<td class="body_td_gray">数据源个数 (启用 / 未启用 / 不支持的 / 未知的)</td>
+<td class="body_td_gray"><span class="font_red"> 
+<% $items_count %>
+( 
+<% $items_count_active %>
+/ 
+<% $items_count_not_active %>
+/ 
+<% $items_count_not_supported %>
+/ 
+<% $items_count_trapper %>
+)</span></td>
+</tr>
+<tr> 
+<td colspan="2" class="body_line"></td>
+</tr>
+<tr> 
+<td class="body_td_gray">设备个数 (已监视 / 未监视)</td>
+<td class="body_td_gray"><span class="font_red"> 
+<% $hosts_count %>
+( 
+<% $hosts_count_monitored %>
+/ 
+<% $hosts_count_not_monitored %>
+)</span></td>
+</tr>
+</table>
+<table width="100%" height="6" border="0" cellpadding="0" cellspacing="0" class="img_table">
+<tr>
+<td><img src="img/onlook_76.gif" class="body_hr"></td>
+</tr>
+</table>
+<div class="right_hr"></div>
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="body_table">
+<tr align="left"> 
+<th colspan="12"><font color="#FF6600" size="3">HOST</font></th>
+</tr>
+<tr> 
+<th align="left" class="body_td_gray">设备名</th>
+<th align="left" class="body_td_gray">IP地址</th>
+<th align="left" class="body_td_gray">操作系统</th>
+<th align="left" class="body_td_gray">已运行时间</th>
+<th align="left" class="body_td_gray">内存使用率</th>
+<th align="left" class="body_td_gray">交换空间使用率</th>
+<th align="left" class="body_td_gray">CPU使用率</th>
+<th align="left" class="body_td_gray">进程数</th>
+<th align="left" class="body_td_gray">网络连接数</th>
+<th align="left" class="body_td_gray">接口1带宽(pkts/min)</th>
+<th align="left" class="body_td_gray">接口2带宽(pkts/min)</th>
+<th align="left" class="body_td_gray">磁盘使用率</th>
+</tr>
+<% foreach value=host_v key=host_k from=$host_info %>
+<% if $host_v[page_type]=="host" %>
+<tr> 
+<td colspan="12" class="body_line"></td>
+</tr>
+<tr> 
+<td class="body_td_gray_two"><% $host_v[host_name] %></td>
+<td class="body_td_gray_two"><% $host_v[host_ip] %></td>
+<td class="body_td_gray_two"><% $host_v[host_system] %></td>
+<td class="body_td_gray_two"><% $host_v[check_time] %></td>
+<td class="body_td_gray_two"><% $host_v[use_memory_per] %></td>
+<td class="body_td_gray_two"><% $host_v[use_swap_per] %></td>
+<td class="body_td_gray_two">
+<% $host_v[cpu_pre] %>
+%</td>
+<td class="body_td_gray_two"><% $host_v[processes_total] %></td>
+<td class="body_td_gray_two"><% $host_v[network_link_num] %></td>
+<td class="body_td_gray_two">
+<% $host_v[newwork_width0] %>&nbsp
+<% $host_v[newwork_name0] %></td>
+<td class="body_td_gray_two">
+<% $host_v[newwork_width1] %>&nbsp
+<% $host_v[newwork_name1] %></td>
+<td class="body_td_gray_two"><% $host_v[use_disk_per] %></td>
+</tr>
+<% /if %>
+<% /foreach %>
+</table>
+<table width="100%" height="6" border="0" cellpadding="0" cellspacing="0" class="img_table">
+<tr>
+<td><img src="img/onlook_76.gif" class="body_hr"></td>
+</tr>
+</table>
+<div class="right_hr"></div>
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="body_table">
+<tr align="left"> 
+<th colspan="10"><font color="#FF6600" size="3">Oracle</font></th>
+</tr>
+<tr> 
+<th align="left" class="body_td_gray">SID</th>
+<th align="left" class="body_td_gray">IP地址</th>
+<th align="left" class="body_td_gray">Buffer Hit %</th>
+<th align="left" class="body_td_gray">Library Hit %</th>
+<th align="left" class="body_td_gray">Execute to Parse %</th>
+<th align="left" class="body_td_gray">Redo NoWait %</th>
+<th align="left" class="body_td_gray">In-memory Sort %</th>
+<th align="left" class="body_td_gray">Latch Hit %</th>
+<th align="left" class="body_td_gray">Share Pool Utility %</th>
+</tr>
+<% foreach value=host_v key=host_k from=$host_info %>
+<% if $host_v[page_type]=="oracle" %>
+<tr> 
+<td colspan="10" class="body_line"></td>
+</tr>
+<tr> 
+<td class="body_td_gray_two">
+<% $host_v[host_name] %>
+</td>
+<td class="body_td_gray_two">
+<% $host_v[host_ip] %>
+</td>
+<td class="body_td_gray_two">
+<% $host_v[buffer_hit] %>
+</td>
+<td class="body_td_gray_two"> 
+<% $host_v[library_hit] %>
+</td>
+<td class="body_td_gray_two"> 
+<% $host_v[execute_to_parse] %>
+</td>
+<td class="body_td_gray_two"> 
+<% $host_v[redo_nowait] %>
+</td>
+<td class="body_td_gray_two"> 
+<% $host_v[in_memory_sort] %>
+</td>
+<td class="body_td_gray_two"> 
+<% $host_v[latch_hit] %>
+</td>
+<td class="body_td_gray_two"> 
+<% $host_v[sga_pre] %>
+</td>
+</tr>
+<% /if %>
+<% /foreach %>
+</table>
+<table width="100%" height="6" border="0" cellpadding="0" cellspacing="0" class="img_table">
+<tr>
+<td><img src="img/onlook_76.gif" class="body_hr"></td>
+</tr>
+</table>
+<div class="right_hr"></div>
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="body_table">
+<tr align="left"> 
+<th colspan="8"><font color="#FF6600" size="3">Cisco</font></th>
+</tr>
+<tr> 
+<th align="left" class="body_td_gray">设备名</th>
+<th align="left" class="body_td_gray">IP地址</th>
+<th align="left" class="body_td_gray">已运行时间</th>
+<th align="left" class="body_td_gray">接口数目</th>
+<th align="left" class="body_td_gray"> 转发数据包数</th>
+<th align="left" class="body_td_gray">输入数据包数</th>
+<th align="left" class="body_td_gray">输入丢弃数</th>
+<th align="left" class="body_td_gray">输出数据包数</th>
+<th align="left" class="body_td_gray">输出丢弃数</th>
+</tr>
+<% foreach value=host_v key=host_k from=$host_info %>
+<% if $host_v[page_type]=="cisco" %>
+<tr> 
+<td colspan="8" class="body_line"></td>
+</tr>
+<tr> 
+<td align="left" class="body_td_gray_two">
+<% $host_v[host_name] %>
+</td>
+<td align="left" class="body_td_gray_two">
+<% $host_v[host_ip] %>
+</td>
+<td align="left" class="body_td_gray_two"><% $host_v[check_time] %></td>
+<td align="left" class="body_td_gray_two">
+<% $host_v[ifNumber] %>
+</td>
+<td class="body_td_gray_two"> 
+<% $host_v[ipForwarding] %>
+</td>
+<td class="body_td_gray_two"> 
+<% $host_v[ipInReceives] %>
+</td>
+<td class="body_td_gray_two"> 
+<% $host_v[ipInDiscards] %>
+</td>
+<td class="body_td_gray_two"> 
+<% $host_v[ipOutRequests] %>
+</td>
+<td class="body_td_gray_two"> 
+<% $host_v[ipOutDiscards] %>
+</td>
+</tr>
+<% /if %>
+<% /foreach %>
+</table>
+<table width="100%" height="6" border="0" cellpadding="0" cellspacing="0" class="img_table">
+<tr>
+<td><img src="img/onlook_76.gif" class="body_hr"></td>
+</tr>
+</table>
+<div class="right_hr"></div>
+</td>
+<td width="8" background="img/right_bg.gif">&nbsp;</td>
+</tr>
+<tr>
+<td width="9" height="58" background="img/left_bg.gif">&nbsp;</td>
+<td colspan="2"><% include file="bottom_tpl.htm"%></td>
+<td width="8" background="img/right_bg.gif">&nbsp;</td>
+</tr>
+</table>
+</body>
+</html>

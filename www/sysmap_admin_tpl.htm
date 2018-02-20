@@ -1,0 +1,120 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>网络图表配置 -<% $web_name %></title>
+<link href="css/inc.css" rel="stylesheet" type="text/css">
+<script src="js/tool.js" charset="utf-8" type="text/javascript" language="javascript"></script>
+<script src="js/dreamsdiv.js" charset="utf-8" type="text/javascript" language="javascript"></script>
+</head>
+
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+  	<td width="9" height="58" background="img/left_bg.gif">&nbsp;</td>
+  	<td colspan="2"><% include file="top_tpl.htm"%></td>
+  	<td width="8" background="img/right_bg.gif">&nbsp;</td>
+  </tr>
+  <tr>
+  	<td width="9" height="58" background="img/left_bg.gif">&nbsp;</td>
+    <td width="149" valign="top"> 
+      <% include file="left_tpl.htm"%>
+    </td>
+    <td valign="top"> 
+      <table width="100%" border="0" cellpadding="0" cellspacing="0" class="body_table">
+        <tr> 
+          <th colspan="5" align="left" class="body_th">网络图表列表</th>
+        </tr>
+        <tr> 
+          <td class="body_td_gray">&nbsp;网络图表名称</td>
+          <td class="body_td_gray">宽</td>
+          <td width="70" class="body_td_gray">高</td>
+          <td class="body_td_gray">&nbsp;背景</td>
+		  <td class="body_td_gray">&nbsp;操作</td>
+        </tr>
+        <% foreach value=v key=k from=$arr_sysmaps %>
+        <tr> 
+          <td colspan="5" class="body_line"></td>
+        </tr>
+        <tr class="<% cycle name=group_row values="body_td_gray_two,body_td_gray" %>"> 
+          <td>&nbsp;<% $v[name] %></td>
+          <td><% $v[width] %></td>
+          <td><% $v[height] %></td>
+		   <td><% $v[background] %></td>
+          <td>&nbsp;<span class="a_span" onClick="sysmap_edit('<% $v[sysmapid] %>','<% $v[name] %>','<% $v[width] %>','<% $v[height] %>','<% $v[background] %>')">修改</span> 
+            <a href="javascript:check_do('del','','sysmap_admin.php?action=del&sysmapid=<% $v[sysmapid] %>');">删除</a> 
+            <span class="a_span" onClick="sysmap_add()">添加 <a href="sysmap_item_admin.php?sysmapid=<% $v[sysmapid] %>" title="设置网络图表">设置</a></span></td>
+        </tr>
+        <% /foreach %>
+      </table> 
+      <table width="100%" height="6" border="0" cellpadding="0" cellspacing="0" class="img_table">
+        <tr>
+			<td><img src="img/onlook_76.gif" class="body_hr"></td>
+		  </tr>
+		</table>
+		<div class="right_hr"></div>
+      <table width="100%" border="0" cellpadding="0" cellspacing="0" class="body_table">
+        <tr> 
+          <th height="24" colspan="3" align="left" class="body_th" id="sysmap_title">添加网络图表</th>
+        </tr>
+        <form id="sysmap_form" action="sysmap_admin.php?action=add" method="post">
+          <tr> 
+            <th width="200" class="body_td_gray">网络图表名称</th>
+            <td width="300" class="body_td_gray"> <input name="name" type="text" class="text_input" id="name" msg_name="网络图表名称" notnull="true"> 
+            </td>
+            <td class="body_td_gray">&nbsp;</td>
+          </tr>
+          <tr> 
+            <td height="4" colspan="3" class="body_line"></td>
+          </tr>
+          <tr> 
+            <th class="body_td_gray_two">宽度</th>
+            <td class="body_td_gray_two"><input name="width" type="text" class="text_input" id="width" msg_name="宽度" isnum="true" notnull="true"> 
+            </td>
+            <td align="left" class="body_td_gray_two">&nbsp;</td>
+          </tr>
+          <tr> 
+            <td colspan="3" class="body_line"></td>
+          </tr>
+          <tr> 
+            <th width="200" class="body_td_gray">高度</th>
+            <td width="300" class="body_td_gray"><input name="height" type="text" class="text_input" id="height" msg_name="高度" isnum="true" notnull="true"></td>
+            <td class="body_td_gray">&nbsp;</td>
+          </tr>
+          <tr> 
+            <td height="4" colspan="3" class="body_line"></td>
+          </tr>
+          <tr style="display:none"> 
+            <th class="body_td_gray_two">背景</th>
+            <td class="body_td_gray_two"><select name="background" id="background">
+              </select> </td>
+            <td align="left" class="body_td_gray_two">&nbsp;</td>
+          </tr>
+          <tr style="display:none"> 
+            <td colspan="3" class="body_line"></td>
+          </tr>
+          <tr> 
+            <th class="body_td_gray">&nbsp;</th>
+            <td class="body_td_gray"><input name="sysmap_btn" type="button" class="button_input" id="sysmap_btn" onClick="dreams_ck_form('name,width,height','sysmap_form','alert')" value="添加"> 
+              <input name="sysmapid" type="hidden" id="sysmapid"></td>
+            <td class="body_td_gray">&nbsp;</td>
+          </tr>
+        </form>
+      </table>
+      <table width="100%" height="6" border="0" cellpadding="0" cellspacing="0" class="img_table">
+        <tr>
+			<td><img src="img/onlook_76.gif" class="body_hr"></td>
+		  </tr>
+		</table>
+		<div class="right_hr"></div>
+	</td>
+	<td width="8" background="img/right_bg.gif">&nbsp;</td>
+  </tr>
+  <tr>
+  	<td width="9" height="58" background="img/left_bg.gif">&nbsp;</td>
+  	<td colspan="2"><% include file="bottom_tpl.htm"%></td>
+  	<td width="8" background="img/right_bg.gif">&nbsp;</td>
+  </tr>
+</table>
+</body>
+</html>

@@ -1,0 +1,357 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>数据源配置 -<% $web_name %></title>
+<link href="css/inc.css" rel="stylesheet" type="text/css">
+<script src="js/tool.js" charset="utf-8" type="text/javascript" language="javascript"></script>
+<script src="js/dreamsdiv.js" charset="utf-8" type="text/javascript" language="javascript"></script>
+</head>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+  	<td width="9" height="58" background="img/left_bg.gif">&nbsp;</td>
+  	<td colspan="2"><% include file="top_tpl.htm"%></td>
+  	<td width="8" background="img/right_bg.gif">&nbsp;</td>
+  </tr>
+  <tr>
+  	<td width="9" height="58" background="img/left_bg.gif">&nbsp;</td>
+    <td width="149" valign="top"> 
+      <% include file="left_tpl.htm"%>
+    </td>
+    <td valign="top">
+		  	<!--主机列表-->
+		  	
+      <table border="0" cellpadding="0" cellspacing="0">
+        <tr>
+			<td valign="top"><div id="host_left_div">
+			  <table border="0" cellpadding="0" cellspacing="0" class="body_table" style="width:180px;height:100%;">
+                <tr><th align="left" class="body_th">主机列表</th></tr>
+			<% foreach value=v key=k from=$arr_hosts %>
+                <tr><td class="body_line"></td></tr>
+				<tr class="<% cycle values="body_td_gray,body_td_gray_two" %>"><td class="<% if $v[hostid]==$s_hostid %>body_td_gray_three<%/if%>">[<% $k|maths:1:"+" %>]<a href="item_admin.php?s_groupid=<% $v[groupid] %>&s_hostid=<% $v[hostid] %>" ><% $v[host] %><% if $v[status]==3 %>(模板)<% /if %></a></td></tr>
+			<% /foreach %>
+			</table></div></td>
+			<td width="16" valign="top" background="img/shut_bg.gif"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><img id="host_left_img" src="img/shut_top.gif" border="0" width="16" onClick="shut_host_left_div()"></td>
+  </tr>
+  <tr>
+    <td id="host_left_text" align="center">关闭</td>
+  </tr>
+  <tr>
+    <td align="center">主机列表</td>
+  </tr>
+</table></td>
+			<td width="100%" valign="top">
+	<table width="100%" border="0" cellpadding="0" cellspacing="0" class="body_table">
+        <tr> 
+          <th align="left" class="body_th">数据源列表(<% $arr_items_count %>)</th>
+          <th align="right" class="body_th">数据源名称 ： 
+            <input name="sources" type="text" class="text_input" id="sources" value="<% $sources %>"> 
+		  分组<select name="s_groupid" id="s_groupid" onChange="select_host(this.value)">
+                <% foreach value=v key=k from=$arr_groups %>
+                <option value="<% $v[groupid] %>" <% if $v[groupid]==$s_groupid %>selected<%/if%>><% $v[name] %></option>
+                <% /foreach %>
+              </select> 
+			  主机<select name="s_hostid" id="s_hostid" class="host_select">
+                <% foreach value=v key=k from=$arr_hosts %>
+				<% if $v[groupid]==$s_groupid or $s_groupid=="" %>
+				<option value="<% $v[hostid] %>" <% if $v[hostid]==$s_hostid %>selected<%/if%>><% $v[host] %><% if $v[status]==3 %>(模板)<% /if %></option>
+				<% /if %>
+				<% /foreach %>
+			  </select>
+			  <select name="import_hostid" id="import_hostid" style="display:none">
+                <% foreach value=v key=k from=$arr_hosts %>
+				<option groupid="<% $v[groupid] %>" value="<% $v[hostid] %>"><% $v[host] %><% if $v[status]==3 %>(模板)<% /if %></option>
+				<% /foreach %>
+              </select>
+            <input type="button" name="Submit" value="搜索" onClick="search_data('item_admin.php','','')" class="button_input">
+          </th>
+        </tr>
+		<tr valign="top"> 
+          <td colspan="2" class="body_line">
+		  <div <% if $arr_items_count >17 %>style="height:480px;overflow-y:auto"<% /if %>>
+            <table width="100%" border="0" cellpadding="0" cellspacing="0">
+              <tr> 
+          <td width="120" class="body_td_gray"><input id="ckb_all" name="ckb_all" type="checkbox" value="ckb_itemid" title="全选" onClick="ckb_select_all('ckb_all')">数据源名称</td>
+          <!--td class="body_td_gray">所属主机名</td-->
+          <td width="120" class="body_td_gray">&nbsp;监控命令</td>
+          <td class="body_td_gray">类型</td>
+          <td width="60" class="body_td_gray">监控频率</td>
+		  <!--td width="60" class="body_td_gray">保留历史</td-->
+		  <!--td width="60" class="body_td_gray">保留趋势</td-->
+          <td width="45" class="body_td_gray">&nbsp;状态</td>
+          <td width="120" class="body_td_gray">&nbsp;错误</td>
+          <td class="body_td_gray">&nbsp;操作</td>
+        </tr>
+		<% if $arr_items_count >= 1 %>
+        <% foreach value=v key=k from=$arr_items %>
+        <tr> 
+          <td colspan="7" class="body_line"></td>
+        </tr>
+        <tr class="<% cycle values="body_td_gray_two,body_td_gray" %>"> 
+          <td><input id="ckb_itemid<% $k %>" name="ckb_itemid" type="checkbox" value="<% $v[itemid] %>">&nbsp;<a href="trigger_admin.php?s_hostid=<% $v[hostid] %>&itemid=<% $v[itemid] %>" title="数据源：<% $v[description] %>"><% $v[description] %></a></td>
+          <!--td><% $v[host] %></td-->
+          <td title="监控命令：<% $v[key_] %>">&nbsp;<% $v[key_]|cut_str:15 %></td>
+          <td> 
+            <% if $v[type]=="0" %>agent<% /if %>
+            <% if $v[type]=="3" %>Simple check<% /if %>
+            <% if $v[type]=="1" %>SNMPv1 agent<% /if %>
+            <% if $v[type]=="4" %>SNMPv2 agent<% /if %>
+            <% if $v[type]=="6" %>SNMPv3 agent<% /if %>
+            <% if $v[type]=="2" %>未知 trapper<% /if %>
+            <% if $v[type]=="5" %>internal<% /if %>
+          </td>
+          <td><% $v[delay] %>(秒)</td>
+		  <!--td><% $v[history] %>(天)</td-->
+		  <!--td><% $v[trends] %>(天)</td-->
+          <td><% if $v[status]=="0" %>启动 <% elseif $v[status]=="1" %>未启动<% elseif $v[status]=="3" %>未知<% else %>错误<% /if %>
+          </td>
+          <td title="<% $v[error] %>"><% $v[error]|cut_str:15 %></td>
+          <td><span onClick="item_edit('<% $v[itemid] %>','<% $v[description] %>','<% $v[hostid] %>','<% $v[type] %>','<% $v[key_] %>','<% $v[units] %>','<% $v[formula] %>','<% $v[delay] %>','<% $v[history] %>','<% $v[trends] %>','<% $v[status] %>','<% $v[value_type] %>','<% $v[delta] %>','<% $v[snmp_community] %>','<% $v[snmp_oid] %>','<% $v[snmp_port] %>','<% $v[snmpv3_securityname] %>','<% $v[snmpv3_securitylevel] %>','<% $v[snmpv3_authpassphrase] %>','<% $v[snmpv3_privpassphrase] %>','<% $s_hostid %>','<% $s_groupid %>','<% $sources %>')" class="a_span">修改</span> 
+            <a href="javascript:check_do('del','','item_admin.php?action=del&itemid=<% $v[itemid] %>');">删除</a> 
+            <span onClick="item_add('<% $v[type] %>','<% $v[value_type] %>','<% $s_groupid %>','<% $sources %>','<% $s_hostid %>')" class="a_span">添加 
+            <a href="trigger_admin.php?s_hostid=<% $v[hostid] %>&itemid=<% $v[itemid] %>" title="点击进入设置告警">告警</a> </span></td>
+        </tr>
+        <% /foreach %>
+		<% else %>
+			<tr> 
+			  <td colspan="7" class="body_td_gray_two" align="center">没有数据</td>
+			</tr>
+		<% /if %>
+		</table>
+		</div> 
+		</td>
+        </tr>
+		<tr align="left"> 
+          <th colspan="2" class="body_th"><input name="del_btn" type="button" value="删除" onClick="ckb_select('ckb_itemid','itemids','','');del_items('itemids','<% $s_hostid %>','<% $s_groupid %>','<% $sources %>')">
+            <select name="import_select" class="host_select" onChange="ckb_select('ckb_itemid','itemids','','');import_items(this.value,'itemids','<% $s_hostid %>','<% $s_groupid %>','<% $sources %>')">
+              <option value="">复制到</option>
+                <% foreach value=v key=k from=$arr_hosts %>
+				<% if $v[status]==0 or $v[status]==1 %>
+				<option value="<% $v[hostid] %>"><% $v[host] %></option>
+				<% /if %>
+				<% /foreach %>
+            </select>
+            <form id="items_form" action="" method="post"><input name="itemids" type="hidden" id="itemids"></form></th>
+      </table>
+      <table width="100%" height="6" border="0" cellpadding="0" cellspacing="0" class="img_table">
+        <tr>
+			<td><img src="img/onlook_76.gif" class="body_hr"></td>
+		  </tr>
+		</table>
+		<div class="right_hr"></div>
+		
+      <table width="100%" border="0" cellpadding="0" cellspacing="0" class="body_table">
+        <tr> 
+          <th colspan="3" align="left" class="body_th" id="item_title">添加数据源</th>
+        </tr>
+        <form id="item_form" action="item_admin.php?action=add&s_groupid=<% $s_groupid%>&s_hostid=<% $s_hostid%>" method="post">
+          <tr> 
+            <th width="200" align="right" class="body_td_gray">名称</th>
+            <td width="200" class="body_td_gray"><input name="description" type="text" id="description" class="text_input" msg_name="名称" notnull="true"></td>
+            <td class="body_td_gray">&nbsp;</td>
+          </tr>
+          <tr> 
+            <td colspan="3" class="body_line"></td>
+          </tr>
+          <tr> 
+            <th align="right" class="body_td_gray_two">主机</th>
+            <td class="body_td_gray_two"><select name="hostid" id="hostid">
+				<% foreach value=v key=k from=$arr_hosts %>
+				<% if $v[groupid]==$s_groupid or $s_groupid=="" %>
+				<option value="<% $v[hostid] %>" <% if $v[hostid]==$s_hostid %>selected<%/if%>><% $v[host] %><% if $v[status]==3 %>(模板)<% /if %></option>
+				<% /if %>
+				<% /foreach %>
+              </select></td>
+            <td class="body_td_gray_two">&nbsp;</td>
+          </tr>
+          <tr> 
+            <td colspan="3" class="body_line"></td>
+          </tr>
+          <tr> 
+            <th width="200" align="right" class="body_td_gray">类型</th>
+            <td width="200" class="body_td_gray"><select name="type" id="type" onChange="change_item_type(this.value)">
+                <option value="0" selected>agent</option>
+                <option value="3">Simple check</option>
+                <option value="1">SNMPv1 agent</option>
+                <option value="4">SNMPv2 agent</option>
+                <option value="6">SNMPv3 agent</option>
+                <option value="2">未知 trapper</option>
+                <option value="5">internal </option>
+              </select></td>
+            <td class="body_td_gray">&nbsp;</td>
+          </tr>
+          <tr> 
+            <td colspan="3" class="body_line"></td>
+          </tr>
+          <tr dreams_id="snmp" style="display:none"> 
+            <th align="right" class="body_td_gray_two">SNMP协议通讯字</th>
+            <td class="body_td_gray_two"><input name="snmp_community" type="text" class="text_input" id="snmp_community"></td>
+            <td class="body_td_gray_two">&nbsp;</td>
+          </tr>
+          <tr dreams_id="snmp" style="display:none"> 
+            <td colspan="3" class="body_line"></td>
+          </tr>
+          <tr dreams_id="snmp" style="display:none"> 
+            <th align="right" class="body_td_gray_two">SNMP 请求的OID</th>
+            <td colspan="2" class="body_td_gray_two"><input name="snmp_oid" type="text" class="text_input" id="snmp_oid" size="50"></td>
+          </tr>
+          <tr dreams_id="snmp" style="display:none"> 
+            <td colspan="3" class="body_line"></td>
+          </tr>
+          <tr dreams_id="snmp" style="display:none"> 
+            <th width="200" align="right" class="body_td_gray_two">SNMP 端口号</th>
+            <td width="200" class="body_td_gray_two"><input name="snmp_port" type="text" class="text_input" id="snmp_port" size="10"></td>
+            <td class="body_td_gray_two">&nbsp;</td>
+          </tr>
+          <tr dreams_id="snmp" style="display:none"> 
+            <td colspan="3" class="body_line"></td>
+          </tr>
+          <tr> 
+            <th align="right" class="body_td_gray_two">监控命令</th>
+            <td class="body_td_gray_two"><input name="key_" type="text" id="key_" class="text_input"></td>
+            <td class="body_td_gray_two">&nbsp;</td>
+          </tr>
+          <tr> 
+            <td colspan="3" class="body_line"></td>
+          </tr>
+          <tr dreams_id="snmp_3" style="display:none"> 
+            <th width="200" align="right" class="body_td_gray_two">SNMPv3 安全名字</th>
+            <td width="200" class="body_td_gray_two"><input name="snmpv3_securityname" type="text" id="snmpv3_securityname" class="text_input"></td>
+            <td class="body_td_gray_two">&nbsp;</td>
+          </tr>
+          <tr dreams_id="snmp_3" style="display:none"> 
+            <td colspan="3" class="body_line"></td>
+          </tr>
+          <tr dreams_id="snmp_3" style="display:none"> 
+            <th align="right" class="body_td_gray_two">SNMPv3 安全级别</th>
+            <td class="body_td_gray_two"><input name="snmpv3_securitylevel" type="text" id="snmpv3_securitylevel" class="text_input"></td>
+            <td class="body_td_gray_two">&nbsp;</td>
+          </tr>
+          <tr dreams_id="snmp_3" style="display:none"> 
+            <td colspan="3" class="body_line"></td>
+          </tr>
+          <tr dreams_id="snmp_3" style="display:none"> 
+            <th width="200" align="right" class="body_td_gray_two">SNMPv3 公钥短语</th>
+            <td width="200" class="body_td_gray_two"><input name="snmpv3_authpassphrase" type="text" id="snmpv3_authpassphrase" class="text_input"></td>
+            <td class="body_td_gray_two">&nbsp;</td>
+          </tr>
+          <tr dreams_id="snmp_3" style="display:none"> 
+            <td colspan="3" class="body_line"></td>
+          </tr>
+          <tr dreams_id="snmp_3" style="display:none"> 
+            <th align="right" class="body_td_gray_two">SNMPv3 私钥短语</th>
+            <td class="body_td_gray_two"><input name="snmpv3_privpassphrase" type="text" id="snmpv3_privpassphrase" class="text_input"></td>
+            <td class="body_td_gray_two">&nbsp;</td>
+          </tr>
+          <tr dreams_id="snmp_3" style="display:none"> 
+            <td colspan="3" class="body_line"></td>
+          </tr>
+          <tr> 
+            <th width="200" align="right" class="body_td_gray">返回数值的类型</th>
+            <td width="200" class="body_td_gray"><input name="units" type="text" id="units" class="text_input"></td>
+            <td class="body_td_gray">(bps, B)</td>
+          </tr>
+          <tr> 
+            <td colspan="3" class="body_line"></td>
+          </tr>
+          <tr> 
+            <th align="right" class="body_td_gray_two">乘法公式</th>
+            <td class="body_td_gray_two"><input name="formula" type="text" class="text_input" id="formula" value="0"></td>
+            <td class="body_td_gray_two">(接受值后使用的乘法公式,0则表示不使用乘法器)</td>
+          </tr>
+          <tr> 
+            <td colspan="3" class="body_line"></td>
+          </tr>
+          <tr> 
+            <th width="200" align="right" class="body_td_gray">监控频率</th>
+            <td width="200" class="body_td_gray"><input name="delay" type="text" class="text_input" id="delay" value="30" size="10" msg_name="监控频率" innum="true">
+              秒</td>
+            <td class="body_td_gray">&nbsp;</td>
+          </tr>
+          <tr> 
+            <td colspan="3" class="body_line"></td>
+          </tr>
+          <tr> 
+            <th align="right" class="body_td_gray_two"> 保留历史</th>
+            <td class="body_td_gray_two"><input name="history" type="text" class="text_input" id="history" value="90" size="10" msg_name="保留历史" innum="true">
+              天</td>
+            <td class="body_td_gray_two">&nbsp;</td>
+          </tr>
+          <tr> 
+            <td colspan="3" class="body_line"></td>
+          </tr>
+          <tr> 
+            <th width="200" align="right" class="body_td_gray">保留趋势</th>
+            <td width="200" class="body_td_gray"><input name="trends" type="text" class="text_input" id="trends" value="365" size="10" msg_name="保留趋势" innum="true">
+              天</td>
+            <td class="body_td_gray">&nbsp;</td>
+          </tr>
+          <tr> 
+            <td colspan="3" class="body_line"></td>
+          </tr>
+          <tr> 
+            <th align="right" class="body_td_gray_two">状态</th>
+            <td class="body_td_gray_two"><select name="status" id="status">
+                <option value="0" selected>启用</option>
+                <option value="1">未启用</option>
+                <option value="3">不支持</option>
+              </select></td>
+            <td class="body_td_gray_two">&nbsp;</td>
+          </tr>
+          <tr> 
+            <td colspan="3" class="body_line"></td>
+          </tr>
+          <tr> 
+            <th width="200" align="right" class="body_td_gray">信息类型</th>
+            <td width="200" class="body_td_gray"><select name="value_type" id="value_type" onChange="change_item_value_type(this.value)">
+                <option value="0" selected>数值</option>
+                <option value="1">字符</option>
+              </select></td>
+            <td class="body_td_gray">&nbsp;</td>
+          </tr>
+          <tr> 
+            <td colspan="3" class="body_line"></td>
+          </tr>
+          <tr> 
+            <th width="200" align="right" class="body_td_gray_two">保存方式</th>
+            <td width="200" class="body_td_gray_two"><select name="delta" id="delta">
+                <option value="0" selected>正常模式</option>
+                <option value="1">差值模式</option>
+                <option value="2">简单变化</option>
+              </select></td>
+            <td class="body_td_gray_two">&nbsp;</td>
+          </tr>
+          <tr> 
+            <td colspan="3" class="body_line"></td>
+          </tr>
+          <tr> 
+            <th class="body_td_gray">&nbsp;</th>
+            <td class="body_td_gray"><input name="item_btn" type="button" class="button_input" id="item_btn" onClick="dreams_ck_form('description','item_form','alert')" value="添加"> 
+              <input name="itemid" type="hidden" id="itemid"></td>
+            <td class="body_td_gray">&nbsp;</td>
+          </tr>
+        </form>
+      </table>
+      <table width="100%" height="6" border="0" cellpadding="0" cellspacing="0" class="img_table">
+        <tr>
+			<td><img src="img/onlook_76.gif" class="body_hr"></td>
+		  </tr>
+		</table>
+		<div class="right_hr"></div>
+				
+		</td></tr></table>
+		<!--主机列表结束-->
+	</td>
+	<td width="8" background="img/right_bg.gif">&nbsp;</td>
+  </tr>
+  <tr>
+  	<td width="9" height="58" background="img/left_bg.gif">&nbsp;</td>
+  	<td colspan="2"><% include file="bottom_tpl.htm"%></td>
+  	<td width="8" background="img/right_bg.gif">&nbsp;</td>
+  </tr>
+</table>
+</body>
+</html>

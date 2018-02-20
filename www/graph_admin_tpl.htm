@@ -1,0 +1,122 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>图表配置 -<% $web_name %></title>
+<link href="css/inc.css" rel="stylesheet" type="text/css">
+<script src="js/tool.js" charset="utf-8" type="text/javascript" language="javascript"></script>
+<script src="js/dreamsdiv.js" charset="utf-8" type="text/javascript" language="javascript"></script>
+</head>
+
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+  	<td width="9" height="58" background="img/left_bg.gif">&nbsp;</td>
+  	<td colspan="2"><% include file="top_tpl.htm"%></td>
+  	<td width="8" background="img/right_bg.gif">&nbsp;</td>
+  </tr>
+  <tr>
+  	<td width="9" height="58" background="img/left_bg.gif">&nbsp;</td>
+    <td width="149" valign="top"> 
+      <% include file="left_tpl.htm"%>
+    </td>
+    <td valign="top"> 
+      <table width="100%" border="0" cellpadding="0" cellspacing="0" class="body_table">
+        <tr> 
+          <th colspan="5" align="left" class="body_th">图表列表</th>
+        </tr>
+        <tr> 
+          <td class="body_td_gray">&nbsp;图表名称</td>
+          <td class="body_td_gray">宽度</td>
+          <td width="70" class="body_td_gray">高度</td>
+          <td width="60" class="body_td_gray">Y 轴类型</td>
+          <td class="body_td_gray">&nbsp;操作</td>
+        </tr>
+        <% foreach value=v key=k from=$arr_graphs %>
+        <tr> 
+          <td colspan="5" class="body_line"></td>
+        </tr>
+        <tr class="<% cycle name=group_row values="body_td_gray_two,body_td_gray" %>"> 
+          <td>&nbsp;<a href="graph_item_admin.php?graphid=<% $v[graphid] %>"><% $v[name] %></a></td>
+          <td><% $v[width] %></td>
+          <td><% $v[height] %></td>
+          <td><% if $v[yaxistype]==0 %>自动计算<% else %>固定高度<% /if %></td>
+          <td>&nbsp;<span class="a_span" onClick="graph_edit('<% $v[graphid] %>','<% $v[name] %>','<% $v[width] %>','<% $v[height] %>','<% $v[yaxistype] %>')">修改</span> 
+            <a href="graph_admin.php?action=del&graphid=<% $v[graphid] %>">删除</a> 
+            <span class="a_span" onClick="graph_add()">添加 <a href="graph_item_admin.php?graphid=<% $v[graphid] %>" title="设置图表显示数据源">设置</a></span></td>
+        </tr>
+        <% /foreach %>
+      </table> 
+      <table width="100%" height="6" border="0" cellpadding="0" cellspacing="0" class="img_table">
+        <tr>
+			<td><img src="img/onlook_76.gif" class="body_hr"></td>
+		  </tr>
+		</table>
+		<div class="right_hr"></div>
+      <table width="100%" border="0" cellpadding="0" cellspacing="0" class="body_table">
+        <tr> 
+          <th id="graph_title" colspan="3" align="left" class="body_th">添加图表</th>
+        </tr>
+        <form id="graph_form" action="graph_admin.php?action=add" method="post">
+          <tr> 
+            <th width="200" class="body_td_gray">图表名称</th>
+            <td width="300" class="body_td_gray"> <input name="name" type="text" class="text_input" id="name" msg_name="图表名称" notnull="true"> 
+            </td>
+            <td class="body_td_gray">&nbsp;</td>
+          </tr>
+          <tr> 
+            <td height="4" colspan="3" class="body_line"></td>
+          </tr>
+          <tr> 
+            <th class="body_td_gray_two">宽度</th>
+            <td class="body_td_gray_two"><input name="width" type="text" class="text_input" id="width" msg_name="宽度" notnull="true"> 
+            </td>
+            <td align="left" class="body_td_gray_two">&nbsp;</td>
+          </tr>
+          <tr> 
+            <td colspan="3" class="body_line"></td>
+          </tr>
+          <tr> 
+            <th width="200" class="body_td_gray">高度</th>
+            <td width="300" class="body_td_gray"><input name="height" type="text" class="text_input" id="height" msg_name="高度" notnull="true"></td>
+            <td class="body_td_gray">&nbsp;</td>
+          </tr>
+          <tr> 
+            <td colspan="3" class="body_line"></td>
+          </tr>
+          <tr id="host_ip"> 
+            <th class="body_td_gray_two">Y轴类型</th>
+            <td class="body_td_gray_two"><select name="yaxistype" id="yaxistype">
+                <option value="0">自动计算</option>
+                <option value="1">固定高度</option>
+              </select> </td>
+            <td class="body_td_gray_two">&nbsp;</td>
+          </tr>
+          <tr> 
+            <td colspan="3" class="body_line"></td>
+          </tr>
+          <tr> 
+            <th class="body_td_gray">&nbsp;</th>
+            <td class="body_td_gray"><input name="graph_btn" type="button" class="button_input" id="graph_btn" onClick="dreams_ck_form('name,width,height','graph_form','alert')" value="添加"> 
+              <input name="graphid" type="hidden" id="graphid"></td>
+            <td class="body_td_gray">&nbsp;</td>
+          </tr>
+        </form>
+      </table>
+      <table width="100%" height="6" border="0" cellpadding="0" cellspacing="0" class="img_table">
+        <tr>
+			<td><img src="img/onlook_76.gif" class="body_hr"></td>
+		  </tr>
+		</table>
+		<div class="right_hr"></div>
+	</td>
+	<td width="8" background="img/right_bg.gif">&nbsp;</td>
+  </tr>
+  <tr>
+  	<td width="9" height="58" background="img/left_bg.gif">&nbsp;</td>
+  	<td colspan="2"><% include file="bottom_tpl.htm"%></td>
+  	<td width="8" background="img/right_bg.gif">&nbsp;</td>
+  </tr>
+</table>
+</body>
+</html>

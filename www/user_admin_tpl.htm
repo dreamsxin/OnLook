@@ -1,0 +1,202 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>用户管理 -<% $web_name %></title>
+<link href="css/inc.css" rel="stylesheet" type="text/css">
+<script src="js/tool.js" charset="utf-8" type="text/javascript" language="javascript"></script>
+</head>
+
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+  	<td width="9" height="58" background="img/left_bg.gif">&nbsp;</td>
+  	<td colspan="2"><% include file="top_tpl.htm"%></td>
+  	<td width="8" background="img/right_bg.gif">&nbsp;</td>
+  </tr>
+  <tr>
+  	<td width="9" height="58" background="img/left_bg.gif">&nbsp;</td>
+    <td width="149" valign="top"> 
+      <% include file="left_tpl.htm"%>
+    </td>
+    <td valign="top"> 
+	<% if $page_type=="group" %>
+      <table width="100%" border="0" cellpadding="0" cellspacing="0" class="body_table">
+        <tr> 
+          <th colspan="3" align="left" class="body_th">[<a href="user_admin.php?page_type=user">用户管理</a>]&nbsp;&nbsp;[<a href="user_admin.php?page_type=group" class="a_select">组管理</a>]</th>
+        </tr>
+        <tr> 
+          <td width="200" class="body_td_gray">&nbsp;组名称</td>
+          <td colspan="2" class="body_td_gray">&nbsp;操作</td>
+        </tr>
+        <% foreach value=v key=k from=$arr_usrgrp %>
+        <tr> 
+          <td colspan="2" class="body_line"></td>
+        </tr>
+        <tr class="<% cycle name=group_row values="body_td_gray_two,body_td_gray" %>"> 
+          <td>&nbsp;<% $v[name] %></td>
+          <td>&nbsp;<span onClick="group_edit('<% $v[usrgrpid] %>','<% $v[name] %>','<% $v[rights] %>')" class="a_span">修改</span> <a href="javascript:check_do('del','','user_admin.php?action=group_del&group_id=<% $v[usrgrpid] %>');">删除</a> <span onClick="group_add()" class="a_span">增加</span></td>
+        </tr>
+        <% /foreach %>
+      </table> 
+      <table width="100%" height="6" border="0" cellpadding="0" cellspacing="0" class="img_table">
+        <tr>
+			<td><img src="img/onlook_76.gif" class="body_hr"></td>
+		  </tr>
+		</table>
+		<div class="right_hr"></div>
+      <table width="100%" border="0" cellpadding="0" cellspacing="0" class="body_table">
+        <tr> 
+          <th id="group_title" colspan="3" align="left" class="body_th">添加组</th>
+        </tr>
+        <form id="group_form" action="user_admin.php?action=group_add" method="post">
+          <tr> 
+            <th width="200" class="body_td_gray">组名</th>
+            <td width="200" class="body_td_gray"><input name="group_name" type="text" id="group_name" class="text_input" msg_name="组名" notnull="true"></td>
+            <td class="body_td_gray">&nbsp;</td>
+          </tr>
+          <tr> 
+            <th width="200" class="body_td_gray">权限</th>
+            <td colspan="2" class="body_td_gray"> 
+              <% foreach value=v key=k from=$arr_rights %>
+			  <% cycle name=rights_row assign=count values="1,2,3,4,5,6" %>			 
+              <input type="checkbox" id="rights_<% $k %>" name="rights_checkbox" value="1">
+              <% $v %>
+			  <% if $count == 6 %><br><% /if %>
+              <% /foreach %>
+              <input name="rights" type="hidden" id="rights"> </td>
+          </tr>
+          <tr> 
+            <td colspan="3" class="body_line"></td>
+          </tr>
+          <tr> 
+            <th class="body_td_gray_two">&nbsp;</th>
+            <td class="body_td_gray_two"><input name="group_btn" type="button" class="button_input" id="group_btn" onClick="ckb_select('rights_checkbox','rights','1','0');dreams_ck_form('group_name','group_form','alert')" value="添加"> 
+              <input name="group_id" type="hidden" id="group_id"></td>
+            <td class="body_td_gray_two">&nbsp;</td>
+          </tr>
+        </form>
+      </table>
+      <table width="100%" height="6" border="0" cellpadding="0" cellspacing="0" class="img_table">
+        <tr>
+			<td><img src="img/onlook_76.gif" class="body_hr"></td>
+		  </tr>
+		</table>
+		<div class="right_hr"></div>
+	<% /if %>
+	<% if $page_type=="user" %>
+      <table width="100%" border="0" cellpadding="0" cellspacing="0" class="body_table">
+        <tr> 
+          <th colspan="5" align="left" class="body_th">[<a href="user_admin.php?page_type=user" class="a_select">用户管理</a>]&nbsp;&nbsp;[<a href="user_admin.php?page_type=group">组管理</a>]</th>
+        </tr>
+        <tr> 
+          <td width="200" class="body_td_gray">&nbsp;账户名</td>
+          <td width="200" class="body_td_gray">&nbsp;姓名 / 职务</td>
+          <td width="200" class="body_td_gray">&nbsp;所属组</td>
+          <td class="body_td_gray">操作</td>
+        </tr>
+        <% foreach value=v key=k from=$arr_users %>
+        <tr> 
+          <td colspan="4" class="body_line"></td>
+        </tr>
+        <tr class="<% cycle name=user_row values="body_td_gray_two,body_td_gray" %>"> 
+          <td>&nbsp;<% $v[alias] %></td>
+          <td>&nbsp;<% $v[name] %> / <% $v[surname] %></td>
+          <td>&nbsp;<% $v[group_name] %></td>
+          <td>&nbsp;<span onClick="user_edit('<% $v[alias] %>','<% $v[userid] %>','<% $v[name] %>','<% $v[surname] %>','<% $v[usrgrpid] %>','<% $v[url]%>')" class="a_span">修改</span> 
+            <a href="javascript:check_do('del','','user_admin.php?action=del&userid=<% $v[userid] %>');">删除</a> 
+            <span onClick="user_add()" class="a_span">增加</span> - <a href="passwd.php?page_type=media">个人设置</a></td>
+        </tr>
+        <% /foreach %>
+      </table>
+      <table width="100%" height="6" border="0" cellpadding="0" cellspacing="0" class="img_table">
+        <tr>
+			<td><img src="img/onlook_76.gif" class="body_hr"></td>
+		  </tr>
+		</table>
+		<div class="right_hr"></div>
+      <table width="100%" border="0" cellpadding="0" cellspacing="0" class="body_table">
+        <tr> 
+          <th id="user_title" colspan="3" align="left" class="body_th">添加用户</th>
+        </tr>
+        <form id="user_form" action="user_admin.php?action=add" method="post">
+          <tr> 
+            <th width="200" class="body_td_gray">帐户</th>
+            <td width="200" class="body_td_gray"><input name="alias" type="text" id="alias" class="text_input" msg_name="账户" notnull="true"></td>
+            <td class="body_td_gray">&nbsp;</td>
+          </tr>
+          <tr> 
+            <td height="4" colspan="3" class="body_line"></td>
+          </tr>
+          <tr> 
+            <th class="body_td_gray_two">姓名</th>
+            <td class="body_td_gray_two"><input name="name" type="text" id="name" class="text_input" msg_name="姓名" notnull="true"></td>
+            <td class="body_td_gray_two">&nbsp;</td>
+          </tr>
+          <tr> 
+            <td colspan="3" class="body_line"></td>
+          </tr>
+          <tr> 
+            <th width="200" class="body_td_gray">职务</th>
+            <td width="200" class="body_td_gray"><input name="surname" type="text" id="surname" class="text_input" msg_name="职务" notnull="true"></td>
+            <td class="body_td_gray">&nbsp;</td>
+          </tr>
+          <tr> 
+            <td colspan="3" class="body_line"></td>
+          </tr>
+          <tr> 
+            <th class="body_td_gray_two">所属组</th>
+            <td class="body_td_gray_two"><select name="usrgrpid" id="usrgrpid">
+                <% foreach value=v key=k from=$arr_usrgrp %>
+                <option value="<% $v[usrgrpid] %>" selected> 
+                <% $v[name] %>
+                </option>
+                <% /foreach %>
+              </select></td>
+            <td class="body_td_gray_two">&nbsp;</td>
+          </tr>
+          <tr> 
+            <td colspan="3" class="body_line"></td>
+          </tr>
+          <tr> 
+            <th class="body_td_gray">密码</th>
+            <td class="body_td_gray"><input name="passwd" type="password" id="passwd" class="text_input" msg_name="密码" notnull="true"></td>
+            <td class="body_td_gray">&nbsp;</td>
+          </tr>
+          <tr> 
+            <td colspan="3" class="body_line"></td>
+          </tr>
+          <tr> 
+            <th class="body_td_gray_two">登陆时进入的默认页面</th>
+            <td class="body_td_gray_two"><input name="url" type="text" id="url" class="text_input" msg_name="密码" notnull="true"></td>
+            <td class="body_td_gray_two">&nbsp;</td>
+          </tr>
+          <tr> 
+            <td colspan="3" class="body_line"></td>
+          </tr>
+          <tr> 
+            <th class="body_td_gray">&nbsp;</th>
+            <td class="body_td_gray"><input name="user_btn" type="button" class="button_input" id="user_btn" onClick="dreams_ck_form('alias,name','user_form','alert')" value="添加"> 
+              <input name="userid" type="hidden" id="userid"></td>
+            <td class="body_td_gray">&nbsp;</td>
+          </tr>
+        </form>
+      </table>
+      <table width="100%" height="6" border="0" cellpadding="0" cellspacing="0" class="img_table">
+        <tr>
+			<td><img src="img/onlook_76.gif" class="body_hr"></td>
+		  </tr>
+		</table>
+		<div class="right_hr"></div>
+	<% /if %>
+	</td>
+	<td width="8" background="img/right_bg.gif">&nbsp;</td>
+  </tr>
+  <tr>
+  	<td width="9" height="58" background="img/left_bg.gif">&nbsp;</td>
+  	<td colspan="2"><% include file="bottom_tpl.htm"%></td>
+  	<td width="8" background="img/right_bg.gif">&nbsp;</td>
+  </tr>
+</table>
+</body>
+</html>

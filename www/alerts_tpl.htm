@@ -1,0 +1,93 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>提醒列表 -<% $web_name %></title>
+<link href="css/inc.css" rel="stylesheet" type="text/css">
+<script src="js/tool.js" charset="utf-8" type="text/javascript" language="javascript"></script>
+<script src="js/dreamsdiv.js" charset="utf-8" type="text/javascript" language="javascript"></script>
+<script>
+//dreams_page
+function dreams_page(curpage){
+	location.href="alerts.php?dreams_curpage="+curpage;
+}
+</script>
+</head>
+
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+  	<td width="9" height="58" background="img/left_bg.gif">&nbsp;</td>
+  	<td colspan="2"><% include file="top_tpl.htm"%></td>
+  	<td width="8" background="img/right_bg.gif">&nbsp;</td>
+  </tr>
+  <tr>
+  	<td width="9" height="58" background="img/left_bg.gif">&nbsp;</td>
+    <td width="149" valign="top"> 
+      <% include file="left_tpl.htm"%>
+    </td>
+    <td valign="top"> 
+
+      <table width="100%" border="0" cellpadding="0" cellspacing="0" class="body_table">
+        <tr> 
+          <th colspan="5" align="left" class="body_th">提醒列表(共<% $alerts_count %>条)</th>
+        </tr>
+        <tr> 
+          <td> <div <% if $arr_alerts_count >17 %>style="height:480px;overflow-y:auto"<% /if %>> 
+              <table width="100%" border="0" cellpadding="0" cellspacing="0">
+                <tr> 
+                  <td width="150" class="body_td_gray">接收方</td>
+                  <td width="200" class="body_td_gray">消息标题</td>
+                  <!--td width="70" class="body_td_gray">重发次数</td-->
+                  <td width="70" class="body_td_gray">发送情况</td>
+                  <td width="80" class="body_td_gray">时间</td>
+                  <td width="80" class="body_td_gray">操作</td>
+                </tr>
+                <% if $arr_alerts_count > 0 %>
+                <% foreach value=v key=k from=$arr_alerts %>
+                <tr> 
+                  <td colspan="6" class="body_line"></td>
+                </tr>
+                <tr class="<% cycle name=group_row values="body_td_gray_two,body_td_gray" %>"> 
+                  <td><% $v[sendto] %></td>
+                  <td><% $v[subject] %></td>
+                  <!--td><% $v[retries] %></td-->
+                  <td><% if $v[status]==0 %>未发送<% else %>已发送<% /if %></td>
+                  <td> <% $v[clock]|date:"Y.M.d H:i:s" %></td>
+                  <td><a href="alert_show.php?alertid=<% $v[alertid] %>">查看</a></td>
+                </tr>
+                <% /foreach %>
+                <% else %>
+                <tr> 
+                  <td colspan="5" class="body_line"></td>
+                </tr>
+                <tr align="center" class="body_td_gray_two"> 
+                  <td colspan="7">&nbsp;目前还没有数据</td>
+                </tr>
+                <% /if %>
+              </table>
+            </div></td>
+        </tr>
+        <tr> 
+          <th colspan="5" align="right" class="body_th"> 
+            <% $pagination %>
+          </th>
+        </tr>
+      </table> 
+      <table width="100%" height="6" border="0" cellpadding="0" cellspacing="0" class="img_table">
+        <tr>
+			<td><img src="img/onlook_76.gif" class="body_hr"></td>
+		  </tr>
+		</table>
+		<div class="right_hr"></div>
+	</td>
+	<td width="8" background="img/right_bg.gif">&nbsp;</td>
+  </tr>
+  <tr>
+  	<td width="9" height="58" background="img/left_bg.gif">&nbsp;</td>
+  	<td colspan="2"><% include file="bottom_tpl.htm"%></td>
+  	<td width="8" background="img/right_bg.gif">&nbsp;</td>
+  </tr>
+</table>
+</body>
+</html>

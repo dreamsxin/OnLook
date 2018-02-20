@@ -1,0 +1,82 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>管理首页 -<% $web_name %></title>
+<link href="css/inc.css" rel="stylesheet" type="text/css">
+<script src="js/dreamsdiv.js" charset="utf-8" type="text/javascript" language="javascript"></script>
+</head>
+
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+  	<td width="9" height="58" background="img/left_bg.gif">&nbsp;</td>
+  	<td colspan="2"><% include file="top_tpl.htm"%></td>
+  	<td width="8" background="img/right_bg.gif">&nbsp;</td>
+  </tr>
+  <tr>
+  	<td width="9" height="58" background="img/left_bg.gif">&nbsp;</td>
+    <td width="149" valign="top"> 
+      <% include file="left_tpl.htm"%>
+    </td>
+    <td valign="top">
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="body_table">
+    <tr> 
+      <th align="left" class="body_th" colspan="2">信息提示</th>
+    </tr>
+    <tr>
+      <td class="body_td" colspan="2">
+	  <ul type="square"><li>欢迎您使用OnLook网络管理系统，我们的目标是为您提供高效、简洁、实用的网络管理服务。</li></ul>
+	  <ul type="square">
+        <li>用户名：<% $arr_users[name] %></li>
+        <li>职&nbsp;&nbsp;&nbsp;&nbsp;务：<% $arr_users[surname] %></li>
+		<li>当前服务器运行状态：<span class="font_red"><% $server_is_runing %></span>&nbsp;<% if $server_is_runing=="正常" %><img src="img/forum_isnews.gif" width="17" height="21" /><% else %><img src="img/forum_nonews.gif" /><% /if %></li>
+		<li>今日告警个数：<span class="font_red"><% $alarms_count %></span>&nbsp;<% if $alarms_count>0 %><script>sound_toplay('sound/ring.wav',3);</script><img src="img/error.gif" width="17" height="21" /><% else %><script>sound_toplay('sound/ring.wav',3);</script><img src="img/forum_isnews.gif" width="17" height="21" /><% /if %>
+</li>
+		<li>今日提醒条数：<span class="font_red"><% $alerts_count %></span>&nbsp;<% if $alerts_count>0 %><img src="img/error.gif" width="17" height="21" /><% else %><img src="img/forum_isnews.gif" width="17" height="21" /><% /if %></li>
+        </ul></td>
+	</tr>
+</table>
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="body_table">
+        <tr> 
+          <th align="left" class="body_th">系统信息</th>
+        </tr>
+        <tr>
+          <td class="body_td"><br/>
+		  <ul>功能概要
+		    <li>完善的用户/用户组管理</li>
+		    <li>多样的主机/网络图管理模式</li>
+		    <li>直观的数据图表和多图表对照模式</li>
+		    <li>用户可以自定义网管项目和触发</li>
+		    <li>完善的事件、报警级别设置和查询</li>
+		    <li>完善的监控日志记录和灵活的日志查询</li>
+		    <li>随时等待您提交的错误报告，我们将尽快排除Bug</li>
+		    </ul>
+		   <ul>
+		    当前版本：
+              <li>10/01/05-.AllView web network management 0.1.2Dev3</li>
+		   </ul>
+           <ul>
+             帮助文档：
+              <li>AllView web network management Manual 0.1</li>
+		  </ul></td>
+        </tr>
+      </table>
+		<table width="100%" height="6" border="0" cellpadding="0" cellspacing="0" class="img_table">
+        <tr>
+			<td><img src="img/onlook_76.gif" class="body_hr"></td>
+		  </tr>
+		</table>
+</td>
+	<td width="8" background="img/right_bg.gif">&nbsp;</td>
+  </tr>
+  <tr>
+  	<td width="9" height="58" background="img/left_bg.gif">&nbsp;</td>
+  	<td colspan="2"><% include file="bottom_tpl.htm"%></td>
+  	<td width="8" background="img/right_bg.gif">&nbsp;</td>
+  </tr>
+</table>
+
+</body>
+</html>
+

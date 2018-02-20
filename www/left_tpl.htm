@@ -1,0 +1,147 @@
+<table width="149" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><img src="img/meun_10.gif" width="7" height="26" alt=""></td>
+    <td width="128" background="img/meun_11.gif">系统 System</td>
+    <td><img src="img/meun_12.gif" width="14" height="26" alt=""></td>
+  </tr>
+  <tr style='<% if $user_rights[1]=="0" %>display:none;<% /if %>'>
+    <td><img src="img/onlook_68.gif" width="7" height="20" alt=""></td>
+    <td background="img/onlook_69.gif" class="font_white"><a href="system_mode.php" class="font_white">系统状态</a></td>
+    <td><img src="img/onlook_71.gif" alt="" width="14" height="20"></td>
+  </tr>
+  <tr style='<% if $user_rights[2]=="0" %>display:none;<% /if %>'>
+    <td><img src="img/onlook_68.gif" width="7" height="20" alt=""></td>
+    <td background="img/onlook_69.gif" class="font_white"><a href="system_config.php" class="font_white">系统设置</a></td>
+    <td><img src="img/onlook_71.gif" alt="" width="14" height="20"></td>
+  </tr>
+  <tr style='<% if $user_rights[3]=="0" %>display:none;<% /if %>'>
+    <td><img src="img/onlook_68.gif" width="7" height="20" alt=""></td>
+    <td background="img/onlook_69.gif" class="font_white"><a href="user_admin.php" class="font_white">用户管理</a></td>
+    <td><img src="img/onlook_71.gif" alt="" width="14" height="20"></td>
+  </tr>
+  <tr style='<% if $user_rights[4]=="0" %>display:none;<% /if %>'>
+    <td><img src="img/onlook_68.gif" width="7" height="20" alt=""></td>
+    <td background="img/onlook_69.gif" class="font_white"><a href="passwd.php" class="font_white">个人设置</a></td>
+    <td><img src="img/onlook_71.gif" alt="" width="14" height="20"></td>
+  </tr>
+  <tr>
+    <td height="5"><img src="img/meun_16.gif" width="7" height="5" alt=""></td>
+    <td background="img/meun_17.gif"></td>
+    <td><img src="img/meun_18.gif" width="14" height="5" alt=""></td>
+  </tr>
+</table>
+<div class="left_hr"></div>
+<table width="149" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><img src="img/meun_10.gif" width="7" height="26" alt=""></td>
+    <td width="128" background="img/meun_11.gif">监控配置 Configuration</td>
+    <td><img src="img/meun_12.gif" width="14" height="26" alt=""></td>
+  </tr>
+  <tr style='<% if $user_rights[5]=="0" %>display:none;<% /if %>'>
+    <td><img src="img/meun_13.gif" width="7" height="20" alt=""></td>
+    <td background="img/meun_14.gif" class="font_white"><a href="host_admin.php" class="font_white">设备配置</a></td>
+    <td><img src="img/meun_15.gif" width="14" alt=""></td>
+  </tr>
+  <tr style='<% if $user_rights[6]=="0" %>display:none;<% /if %>'>
+    <td><img src="img/meun_13.gif" width="7" height="20" alt=""></td>
+    <td background="img/meun_14.gif" class="font_white"><a href="item_admin.php" class="font_white">数据源配置</a></td>
+    <td><img src="img/meun_15.gif" width="14" alt=""></td>
+  </tr>
+  <tr style='<% if $user_rights[7]=="0" %>display:none;<% /if %>'>
+    <td><img src="img/meun_13.gif" width="7" height="20" alt=""></td>
+    <td background="img/meun_14.gif" class="font_white"><a href="trigger_admin.php" class="font_white">告警配置</a></td>
+    <td><img src="img/meun_15.gif" width="14" alt=""></td>
+  </tr>
+  <tr style='<% if $user_rights[8]=="0" %>display:none;<% /if %>'>
+    <td><img src="img/meun_13.gif" width="7" height="20" alt=""></td>
+    <td background="img/meun_14.gif" class="font_white"><a href="graph_admin.php" class="font_white">图表配置</a></td>
+    <td><img src="img/meun_15.gif" width="14" alt=""></td>
+  </tr>
+  <tr style='<% if $user_rights[10]=="0" %>display:none;<% /if %>'>
+    <td><img src="img/meun_13.gif" width="7" height="20" alt=""></td>
+    <td background="img/meun_14.gif" class="font_white"><a href="sysmap_admin.php" class="font_white">网络图表配置</a></td>
+    <td><img src="img/meun_15.gif" width="14" alt=""></td>
+  </tr>
+  <tr style='<% if $user_rights[9]=="0" %>display:none;<% /if %>'>
+    <td><img src="img/meun_13.gif" width="7" height="20" alt=""></td>
+    <td background="img/meun_14.gif" class="font_white"><a href="screen_admin.php" class="font_white">对照表配置</a></td>
+    <td><img src="img/meun_15.gif" width="14" alt=""></td>
+  </tr>
+  <tr>
+    <td height="5"><img src="img/meun_16.gif" width="7" height="5" alt=""></td>
+    <td background="img/meun_17.gif"></td>
+    <td><img src="img/meun_18.gif" width="14" height="5" alt=""></td>
+  </tr>
+</table>
+<div class="left_hr"></div>
+<table width="149" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><img src="img/meun_10.gif" width="7" height="26" alt=""></td>
+    <td width="128" background="img/meun_11.gif">监控浏览 Monitor brow</td>
+    <td><img src="img/meun_12.gif" width="14" height="26" alt=""></td>
+  </tr> 
+  <tr style='<% if $user_rights[11]=="0" %>display:none;<% /if %>'>
+    <td><img src="img/onlook_47.gif" width="7" height="20" alt=""></td>
+    <td background="img/onlook_48.gif" class="font_white"><a href="show_date.php" class="font_white">监控数据浏览</a></td>
+    <td><img src="img/onlook_50.gif" alt="" width="14" height="20"></td>
+  </tr>
+  <tr style='<% if $user_rights[12]=="0" %>display:none;<% /if %>'>
+    <td><img src="img/onlook_47.gif" width="7" height="20" alt=""></td>
+    <td background="img/onlook_48.gif" class="font_white"><a href="report.php" class="font_white">可用性报告</a></td>
+    <td><img src="img/onlook_50.gif" alt="" width="14" height="20"></td>
+  </tr>
+  <tr style='<% if $user_rights[13]=="0" %>display:none;<% /if %>'>
+    <td><img src="img/onlook_47.gif" width="7" height="20" alt=""></td>
+    <td background="img/onlook_48.gif" class="font_white"><a href="graphs.php" class="font_white">图表浏览</a></td>
+    <td><img src="img/onlook_50.gif" alt="" width="14" height="20"></td>
+  </tr>
+  <tr style='<% if $user_rights[15]=="0" %>display:none;<% /if %>'>
+    <td><img src="img/onlook_47.gif" width="7" height="20" alt=""></td>
+    <td background="img/onlook_48.gif" class="font_white"><a href="sysmaps.php" class="font_white">网络图表浏览</a></td>
+    <td><img src="img/onlook_50.gif" alt="" width="14" height="20"></td>
+  </tr>
+  <tr style='<% if $user_rights[14]=="0" %>display:none;<% /if %>'>
+    <td><img src="img/onlook_47.gif" width="7" height="20" alt=""></td>
+    <td background="img/onlook_48.gif" class="font_white"><a href="screens.php" class="font_white">对照表浏览</a></td>
+    <td><img src="img/onlook_50.gif" alt="" width="14" height="20"></td>
+  </tr>
+  <tr style='<% if $user_rights[16]=="0" %>display:none;<% /if %>'>
+    <td><img src="img/onlook_47.gif" width="7" height="20" alt=""></td>
+    <td background="img/onlook_48.gif" class="font_white"><a href="alarms.php" class="font_white">告警列表</a></td>
+    <td><img src="img/onlook_50.gif" alt="" width="14" height="20"></td>
+  </tr>
+  <tr style='<% if $user_rights[17]=="0" %>display:none;<% /if %>'>
+    <td><img src="img/onlook_51.gif" width="7" height="20" alt=""></td>
+    <td background="img/onlook_52.gif" class="font_white"><a href="alerts.php" class="font_white">提醒列表</a></td>
+    <td><img src="img/onlook_54.gif" alt="" width="14" height="20"></td>
+  </tr>
+  <tr>
+    <td height="5"><img src="img/meun_16.gif" width="7" height="5" alt=""></td>
+    <td background="img/meun_17.gif"></td>
+    <td><img src="img/meun_18.gif" width="14" height="5" alt=""></td>
+  </tr>
+</table>
+<div class="left_hr"></div>
+<table width="149" border="0" cellspacing="0" cellpadding="0" style='<% if $user_rights[18]=="0" %>display:none;<% /if %>'>
+  <tr>
+    <td><img src="img/meun_10.gif" width="7" height="26" alt=""></td>
+    <td width="128" background="img/meun_11.gif">日志 Log</td>
+    <td><img src="img/meun_12.gif" width="14" height="26" alt=""></td>
+  </tr>
+  <!--tr>
+    <td><img src="img/onlook_68.gif" width="7" height="20" alt=""></td>
+    <td background="img/onlook_69.gif" class="font_white"><a href="syslogs.php" class="font_white">系统日志</a></td>
+    <td><img src="img/onlook_71.gif" alt="" width="14" height="20"></td>
+  </tr-->
+  <tr>
+    <td><img src="img/onlook_72.gif" width="7" height="20" alt=""></td>
+    <td background="img/onlook_73.gif" class="font_white"><a href="syslogs.php" class="font_white">系统日志</a></td>
+    <td><img src="img/onlook_75.gif" alt="" width="14" height="20"></td>
+  </tr>
+  <tr>
+    <td height="5"><img src="img/onlook_76.gif" width="7" height="6" alt=""></td>
+    <td background="img/onlook_77.gif"></td>
+    <td><img src="img/onlook_79.gif" width="14" height="6" alt=""></td>
+  </tr>
+</table>
+<div class="left_hr"></div>

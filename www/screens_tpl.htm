@@ -1,0 +1,66 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>对照表浏览 -<% $web_name %></title>
+<link href="css/inc.css" rel="stylesheet" type="text/css">
+<script src="js/tool.js" charset="utf-8" type="text/javascript" language="javascript"></script>
+<script src="js/dreamsdiv.js" charset="utf-8" type="text/javascript" language="javascript"></script>
+</head>
+
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+  	<td width="9" height="58" background="img/left_bg.gif">&nbsp;</td>
+  	<td colspan="2"><% include file="top_tpl.htm"%></td>
+  	<td width="8" background="img/right_bg.gif">&nbsp;</td>
+  </tr>
+  <tr>
+  	<td width="9" height="58" background="img/left_bg.gif">&nbsp;</td>
+    <td colspan="2" valign="top">
+	  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+	  <tr>
+	  <td width="149"><% include file="left_tpl.htm"%></td>
+	  <td valign="top">
+      <table width="100%" border="0" cellpadding="0" cellspacing="0" class="body_table">
+        <tr> 
+          <th colspan="5" align="left" class="body_th">对照表列表</th>
+        </tr>
+        <tr> 
+          <td class="body_td_gray">&nbsp;对照表名称</td>
+          <td class="body_td_gray">列数</td>
+          <td width="70" class="body_td_gray">行数</td>
+          <td class="body_td_gray">查看</td>
+        </tr>
+        <% foreach value=v key=k from=$arr_screens %>
+        <tr> 
+          <td colspan="4" class="body_line"></td>
+        </tr>
+        <tr class="<% cycle name=group_row values="body_td_gray_two,body_td_gray" %>"> 
+          <td>&nbsp;<a href="screen_item_admin.php?screenid=<% $v[screenid] %>" title="设置对照表图表"><% $v[name] %></a></td>
+          <td><% $v[cols] %></td>
+          <td><% $v[rows] %></td>
+          <td><a href="screens_show.php?screenid=<% $v[screenid] %>">图表</a></td>
+        </tr>
+        <% /foreach %>
+      </table> 
+      <table width="100%" height="6" border="0" cellpadding="0" cellspacing="0" class="img_table">
+        <tr>
+			<td><img src="img/onlook_76.gif" class="body_hr"></td>
+		  </tr>
+		</table>
+		<div class="right_hr"></div>
+		</td>
+	  </tr>
+	  </table>
+	</td>
+	<td width="8" background="img/right_bg.gif">&nbsp;</td>
+  </tr>
+  <tr>
+  	<td width="9" height="58" background="img/left_bg.gif">&nbsp;</td>
+  	<td colspan="2"><% include file="bottom_tpl.htm"%></td>
+  	<td width="8" background="img/right_bg.gif">&nbsp;</td>
+  </tr>
+</table>
+</body>
+</html>

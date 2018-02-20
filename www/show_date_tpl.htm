@@ -1,0 +1,145 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>监控数据浏览 -<% $web_name %></title>
+<link href="css/inc.css" rel="stylesheet" type="text/css">
+<script src="js/tool.js" charset="utf-8" type="text/javascript" language="javascript"></script>
+<script src="js/dreamsdiv.js" charset="utf-8" type="text/javascript" language="javascript"></script>
+</head>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+  	<td width="9" height="58" background="img/left_bg.gif">&nbsp;</td>
+  	<td colspan="2"><% include file="top_tpl.htm"%></td>
+  	<td width="8" background="img/right_bg.gif">&nbsp;</td>
+  </tr>
+  <tr>
+  	<td width="9" height="58" background="img/left_bg.gif">&nbsp;</td>
+    <td width="149" valign="top"> 
+      <% include file="left_tpl.htm"%>
+    </td>
+    <td valign="top">
+	<!--主机列表-->
+		  	
+      <table border="0" cellpadding="0" cellspacing="0">
+        <tr>
+			<td valign="top"><div id="host_left_div">
+			  <table border="0" cellpadding="0" cellspacing="0" class="body_table" style="width:180px;height:100%;">
+                <tr><th align="left" class="body_th">主机列表</th></tr>
+			<% foreach value=v key=k from=$arr_hosts %>
+                <tr><td class="body_line"></td></tr>
+				<tr class="<% cycle values="body_td_gray,body_td_gray_two" %>"><td class="<% if $v[hostid]==$s_hostid %>body_td_gray_three<%/if%>">[<% $k|maths:1:"+" %>]<a href="show_date.php?s_groupid=<% $v[groupid] %>&s_hostid=<% $v[hostid] %>" ><% $v[host] %><% if $v[status]==3 %>(模板)<% /if %></a></td></tr>
+			<% /foreach %>
+			</table></div></td>
+			<td width="16" valign="top" background="img/shut_bg.gif"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><img id="host_left_img" src="img/shut_top.gif" border="0" width="16" onClick="shut_host_left_div()"></td>
+  </tr>
+  <tr>
+    <td id="host_left_text" align="center">关闭</td>
+  </tr>
+  <tr>
+    <td align="center">主机列表</td>
+  </tr>
+</table></td>
+			<td width="100%" valign="top">
+	<table width="100%" border="0" cellpadding="0" cellspacing="0" class="body_table">
+        <tr> 
+          <th align="left" class="body_th">最新数据(共<% $arr_date_count %>条)</th>
+          <th align="right" class="body_th"> 数据源名称 ： 
+            <input name="sources" type="text" class="text_input" id="sources" value="<% $sources %>">
+            分组 
+            <select name="s_groupid" id="s_groupid" onChange="select_host(this.value)">
+              <% foreach value=v key=k from=$arr_groups %>
+              <option value="<% $v[groupid] %>" <% if $v[groupid]==$s_groupid %>selected<%/if%>> <% $v[name] %></option>
+              <% /foreach %>
+            </select>
+            主机 
+            <select name="s_hostid" id="s_hostid" class="host_select">
+              <% foreach value=v key=k from=$arr_hosts %>
+              <% if $v[groupid]==$s_groupid or $s_groupid=="" %>
+              <option value="<% $v[hostid] %>" <% if $v[hostid]==$s_hostid %>selected<%/if%>> 
+              <% $v[host] %>
+              <% if $v[status]==3 %>
+              (模板) 
+              <% /if %>
+              </option>
+              <% /if %>
+              <% /foreach %>
+            </select> <select name="import_hostid" id="import_hostid" style="display:none">
+              <% foreach value=v key=k from=$arr_hosts %>
+              <option groupid="<% $v[groupid] %>" value="<% $v[hostid] %>"> 
+              <% $v[host] %>
+              <% if $v[status]==3 %>
+              (模板) 
+              <% /if %>
+              </option>
+              <% /foreach %>
+            </select> <input type="button" name="Submit" value="搜索" onClick="search_data('show_date.php','','')" class="button_input">
+          </th>
+        </tr>
+		<tr>
+		<td colspan="2" width="100%">
+		<div <% if $arr_date_count >17 %>style="height:480px;overflow-y:auto"<% /if %>>
+        <table width="100%" border="0" cellpadding="0" cellspacing="0">
+        <tr> 
+                  <td class="body_td_gray"><a title="按数据源名称排序" href="javascript:search_data('show_date.php','i.description','<% if $sort=='i.description' and $desc=="desc" %><% elseif $sort=='i.description' and $desc!="desc" %>desc<% /if %>');">数据源名称 
+                    <% if $sort=='i.description' and $desc=="desc" %>
+                    <font class="e_font">↓</font> 
+                    <% elseif $sort=='i.description' and $desc!="desc" %>
+                    <font class="e_font">↑</font> 
+                    <% /if %>
+                    </a></td>
+                  <!--td class="body_td_gray"><a title="按所属主机名排序" href="javascript:search_data('show_date.php','h.host','<% if $sort=='h.host' and $desc=="desc" %><% elseif $sort=='h.host' and $desc!="desc" %>desc<% /if %>');">所属主机名 
+                    <% if $sort=='h.host' and $desc=="desc" %>
+                    <font class="e_font">↓</font> 
+                    <% elseif $sort=='h.host' and $desc!="desc" %>
+                    <font class="e_font">↑</font> 
+                    <% /if %>
+                    </a></td-->
+          <td class="body_td_gray">最新数值</td>
+          <td width="60" class="body_td_gray">改变</td>
+		  <td width="120" class="body_td_gray"><a title="按最新检查时间排序" href="javascript:search_data('show_date.php','i.lastclock','<% if $sort=='i.lastclock' and $desc=="desc" %><% elseif $sort=='i.lastclock' and $desc!="desc" %>desc<% /if %>');">最新检查时间 <% if $sort=='i.lastclock' and $desc=="desc" %><font class="e_font">↓</font><% elseif $sort=='i.lastclock' and $desc!="desc" %><font class="e_font">↑</font> <% /if %></a></td>
+          <td class="body_td_gray">查看历史</td>
+        </tr>
+        <% if $arr_date_count >= 1 %>
+        <% foreach value=v key=k from=$arr_date %>
+        <tr> 
+          <td colspan="6" class="body_line"></td>
+        </tr>
+        <tr class="<% cycle values="body_td_gray_two,body_td_gray" %>"> 
+          <td><% $v[description] %></td>
+          <!--td><% $v[host] %></td-->          
+          <td><% $v[lastvalue]|units:$v[units]|cut_str:20 %></td>
+          <td><% $v[lastvalue]|convert_units:$v[prevvalue]:$v[units] %></td>
+		  <td><% $v[lastclock]|date:"Y-m-d H:i:s"|trim_str:'-' %></td>
+          <td><% if $v[status]==0 %><% if $v[value_type]==0 %><a href="history.php?action=graph&itemid=<% $v[itemid] %>&from=<% $v[lastclock]|maths:600:"-" %>&till=<% $v[lastclock] %>">图表</a> <% else %><a href="history.php?action=text&period=3600&itemid=<% $v[itemid] %>&from=<% $v[lastclock]|maths:600:"-" %>&till=<% $v[lastclock] %>">文本</a> <% /if %><% elseif $v[status]==1 %>未启用<% elseif $v[status]==3 %>不支持<% else %>错误<% /if %></td>
+        </tr>
+        <% /foreach %>
+        <% /if %>
+		</table>
+		</div>
+		</td>
+		</tr>
+      </table>
+      <table width="100%" height="6" border="0" cellpadding="0" cellspacing="0" class="img_table">
+        <tr>
+			<td><img src="img/onlook_76.gif" class="body_hr"></td>
+		  </tr>
+		</table>
+		<div class="right_hr"></div>
+
+		</td></tr></table>
+		<!--主机列表结束-->
+	</td>
+	<td width="8" background="img/right_bg.gif">&nbsp;</td>
+  </tr>
+  <tr>
+  	<td width="9" height="58" background="img/left_bg.gif">&nbsp;</td>
+  	<td colspan="2"><% include file="bottom_tpl.htm"%></td>
+  	<td width="8" background="img/right_bg.gif">&nbsp;</td>
+  </tr>
+</table>
+</body>
+</html>

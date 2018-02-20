@@ -1,0 +1,913 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>性能 -<% $web_name %></title>
+<link href="css/inc.css" rel="stylesheet" type="text/css">
+<script src="js/tool.js" charset="utf-8" type="text/javascript" language="javascript"></script>
+<script src="js/dreamsdiv.js" charset="utf-8" type="text/javascript" language="javascript"></script>
+</head>
+
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+  	<td width="9" height="58" background="img/left_bg.gif">&nbsp;</td>
+  	<td colspan="2"><% include file="top_tpl.htm"%></td>
+  	<td width="8" background="img/right_bg.gif">&nbsp;</td>
+  </tr>
+  <tr>
+  	<td width="9" height="58" background="img/left_bg.gif">&nbsp;</td>
+    <td width="149" valign="top"> <% include file="left_tpl.htm"%></td>
+    <td valign="top">
+	<!--设备列表-->
+		  	
+      <table width="100%" border="0" cellpadding="0" cellspacing="0">
+        <tr>
+			<td valign="top"><div id="host_left_div">
+			  <table border="0" cellpadding="0" cellspacing="0" class="body_table" style="width:180px;height:100%;">
+                <tr><th align="left" class="body_th">设备列表</th></tr>
+			<% foreach value=v key=k from=$arr_hosts %>
+                <tr><td class="body_line"></td></tr>
+				<tr class="<% cycle values="body_td_gray,body_td_gray_two" %>"><td class="<% if $v[hostid]==$hostid %>body_td_gray_three<%/if%>">[<% $k|maths:1:"+" %>]<a href="host_performance.php?hostid=<% $v[hostid] %>" ><% $v[host] %><% if $v[status]==3 %>(模板)<% /if %></a></td></tr>
+			<% /foreach %>
+			</table></div></td>
+			<td width="16" valign="top" background="img/shut_bg.gif"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><img id="host_left_img" src="img/shut_top.gif" border="0" width="16" onClick="shut_host_left_div()"></td>
+  </tr>
+  <tr>
+    <td id="host_left_text" align="center">关闭</td>
+  </tr>
+  <tr>
+    <td align="center">设备列表</td>
+  </tr>
+</table></td>
+			
+          <td width="100%" valign="top">
+		  <% if $page_type=="host" %>
+            <table width="100%" border="0" cellpadding="1" cellspacing="0"  class="body_table">
+              <tr align="left"> 
+                <th colspan="3">[<a href="host_performance.php?hostid=<% $hostid %>&page_type=host" class="a_select"><font size="4">HOST</font></a>]&nbsp;&nbsp;<!--[<a href="host_performance.php?hostid=<% $hostid %>&page_type=oracle">Oracle</a>]&nbsp;&nbsp;[<a href="host_performance.php?hostid=<% $hostid %>&page_type=cisco">Cisco</a>]--></th>
+              </tr>
+              <tr valign="top"> 
+                <td width="25%"> <table width="100%" border="0" cellpadding="0" cellspacing="0">
+                    <tr> 
+                      <th colspan="2" align="left" class="body_th">[系统]</th>
+                    </tr>
+                    <tr> 
+                      <td width="80" align="right" class="body_td_gray">设备名：</td>
+                      <td align="left" class="body_td_gray"><% $host_name %></td>
+                    </tr>
+                    <tr> 
+                      <td colspan="2" class="body_line"></td>
+                    </tr>
+                    <tr> 
+                      <td align="right" class="body_td_gray_two">&nbsp;IP地址：</td>
+                      <td class="body_td_gray_two"> 
+                        <% $host_ip %>
+                      </td>
+                    </tr>
+                    <tr> 
+                      <td colspan="2" class="body_line"></td>
+                    </tr>
+                    <tr> 
+                      <td align="right" class="body_td_gray">操作系统：</td>
+                      <td class="body_td_gray"> 
+                        <% $host_system %>
+                      </td>
+                    </tr>
+                    <tr> 
+                      <td colspan="2" class="body_line"></td>
+                    </tr>
+                    <tr> 
+                      <td align="right" class="body_td_gray_two">已运行时间：</td>
+                      <td class="body_td_gray_two"> 
+                        <% $check_time %>
+                      </td>
+                    </tr>
+                    <tr> 
+                      <td colspan="2" class="body_line"></td>
+                    </tr>
+                  </table></td>
+                <td width="25%"><table width="100%" border="0" cellpadding="0" cellspacing="0">
+                    <tr> 
+                      <th colspan="2" align="left" class="body_th">[内存]</th>
+                    </tr>
+                    <tr> 
+                      <td width="70" align="right" class="body_td_gray">总量：</td>
+                      <td align="left" class="body_td_gray"><div style="width:150px"> 
+                          <% $memory_total_img %>
+                          &nbsp; 
+                          <% $memory_total %>
+                        </div></td>
+                    </tr>
+                    <tr> 
+                      <td colspan="2" class="body_line"></td>
+                    </tr>
+                    <tr> 
+                      <td align="right" class="body_td_gray_two">&nbsp;空闲：</td>
+                      <td class="body_td_gray_two"><div style="width:150px"> 
+                          <% $free_memory_img%>
+                          &nbsp; 
+                          <% $free_memory %>
+                        </div></td>
+                    </tr>
+                    <tr> 
+                      <td colspan="2" class="body_line"></td>
+                    </tr>
+                    <tr> 
+                      <td align="right" class="body_td_gray">使用率：</td>
+                      <td class="body_td_gray"><div style="width:150px"> 
+                          <% $use_memory_img %>
+                          <% $use_memory_per %>
+                        </div></td>
+                    </tr>
+                    <tr> 
+                      <td colspan="2" class="body_line"></td>
+                    </tr>
+                    <tr> 
+                      <td class="body_td_gray_two">&nbsp;</td>
+                      <td class="body_td_gray_two">&nbsp;</td>
+                    </tr>
+                    <tr> 
+                      <td colspan="2" class="body_line"></td>
+                    </tr>
+                  </table></td>
+                <td width="25%"><table width="100%" border="0" cellpadding="0" cellspacing="0">
+                    <tr> 
+                      <th colspan="2" align="left" class="body_th">[交换空间]</th>
+                    </tr>
+                    <tr> 
+                      <td width="70" align="right" class="body_td_gray">总量：</td>
+                      <td align="left" class="body_td_gray"><div style="width:150px"> 
+                          <% $swap_total_img %>
+                          &nbsp; 
+                          <% $swap_total %>
+                        </div></td>
+                    </tr>
+                    <tr> 
+                      <td colspan="2" class="body_line"></td>
+                    </tr>
+                    <tr> 
+                      <td align="right" class="body_td_gray_two">空闲：</td>
+                      <td class="body_td_gray_two"><div style="width:150px"> 
+                          <% $free_swap_img%>
+                          &nbsp; 
+                          <% $free_swap %>
+                        </div></td>
+                    </tr>
+                    <tr> 
+                      <td colspan="2" class="body_line"></td>
+                    </tr>
+                    <tr> 
+                      <td align="right" class="body_td_gray">使用率：</td>
+                      <td class="body_td_gray"><div style="width:150px"> 
+                          <% $use_swap_img %>
+                          <% $use_swap_per %>
+                        </div></td>
+                    </tr>
+                    <tr> 
+                      <td colspan="2" class="body_line"></td>
+                    </tr>
+                    <tr> 
+                      <td class="body_td_gray_two">&nbsp;</td>
+                      <td class="body_td_gray_two">&nbsp;</td>
+                    </tr>
+                    <tr> 
+                      <td colspan="2" class="body_line"></td>
+                    </tr>
+                  </table></td>
+              </tr>
+              <tr valign="top"> 
+                <td><table width="100%" border="0" cellpadding="0" cellspacing="0">
+                    <tr> 
+                      <th colspan="2" align="left" class="body_th">[CPU]</th>
+                    </tr>
+                    <tr> 
+                      <td width="80" align="right" class="body_td_gray">用户：</td>
+                      <td align="left" class="body_td_gray"><div style="width:150px"> 
+                          <% $user_use_cpu_img%>
+                          &nbsp; 
+                          <% $user_use_cpu %>
+                          % </div></td>
+                    </tr>
+                    <tr> 
+                      <td colspan="2" class="body_line"></td>
+                    </tr>
+                    <tr> 
+                      <td align="right" class="body_td_gray_two">&nbsp;系统：</td>
+                      <td class="body_td_gray_two"><div style="width:150px"> 
+                          <% $system_use_cpu_img%>
+                          &nbsp; 
+                          <% $system_use_cpu %>
+                          % </div></td>
+                    </tr>
+                    <tr> 
+                      <td colspan="2" class="body_line"></td>
+                    </tr>
+                    <tr> 
+                      <td align="right" class="body_td_gray">等待：</td>
+                      <td class="body_td_gray"><div style="width:150px"> 
+                          <% $wait_cpu_img%>
+                          &nbsp; 
+                          <% $wait_cpu %>
+                          % </div></td>
+                    </tr>
+                    <tr> 
+                      <td colspan="2" class="body_line"></td>
+                    </tr>
+                    <tr> 
+                      <td colspan="2" class="body_line"></td>
+                    </tr>
+                  </table></td>
+                <td><table width="100%" border="0" cellpadding="0" cellspacing="0">
+                    <tr> 
+                      <th colspan="2" align="left" class="body_th">[进程]</th>
+                    </tr>
+                    <tr> 
+                      <td width="70" align="right" class="body_td_gray">总数：</td>
+                      <td align="left" class="body_td_gray"><div style="width:150px"> 
+                          <% $processes_total_img %>
+                          &nbsp; 
+                          <% $processes_total %>
+                        </div></td>
+                    </tr>
+                    <tr> 
+                      <td colspan="2" class="body_line"></td>
+                    </tr>
+                    <tr> 
+                      <td align="right" class="body_td_gray_two">&nbsp;忙碌：</td>
+                      <td class="body_td_gray_two"><div style="width:150px"> 
+                          <% $running_processes_img %>
+                          &nbsp; 
+                          <% $running_processes %>
+                        </div></td>
+                    </tr>
+                    <tr> 
+                      <td colspan="2" class="body_line"></td>
+                    </tr>
+                    <tr> 
+                      <td align="right" class="body_td_gray">僵死：</td>
+                      <td class="body_td_gray"><div style="width:150px"> 
+                          <% $die_processes_img %>
+                          &nbsp; 
+                          <% $die_processes %>
+                        </div></td>
+                    </tr>
+                    <tr> 
+                      <td colspan="2" class="body_line"></td>
+                    </tr>
+                    <tr> 
+                      <td colspan="2" class="body_line"></td>
+                    </tr>
+                  </table></td>
+                <td><table width="100%" border="0" cellpadding="0" cellspacing="0">
+                    <tr> 
+                      <th colspan="2" align="left" class="body_th">[磁盘]</th>
+                    </tr>
+                    <tr> 
+                      <td width="70" align="right" class="body_td_gray">总量：</td>
+                      <td align="left" class="body_td_gray"><div style="width:150px"> 
+                          <% $disk_total_img %>
+                          <% $disk_total %>
+                        </div></td>
+                    </tr>
+                    <tr> 
+                      <td colspan="2" class="body_line"></td>
+                    </tr>
+                    <tr> 
+                      <td align="right" class="body_td_gray_two">空闲：</td>
+                      <td class="body_td_gray_two"><div style="width:150px"> 
+                          <% $free_disk_img %>
+                          <% $free_disk %>
+                        </div></td>
+                    </tr>
+                    <tr> 
+                      <td colspan="2" class="body_line"></td>
+                    </tr>
+                    <tr> 
+                      <td align="right" class="body_td_gray">使用率：</td>
+                      <td class="body_td_gray"><div style="width:150px"> 
+                          <% $use_disk_img %>
+                          <% $use_disk_per %>
+                        </div></td>
+                    </tr>
+                    <tr> 
+                      <td colspan="2" class="body_line"></td>
+                    </tr>
+                  </table></td>
+              </tr>
+              <tr valign="top"> 
+                <td colspan="3"><table width="100%" border="0" cellpadding="0" cellspacing="0">
+                    <tr> 
+                      <th colspan="4" align="left" class="body_th">[网络]</th>
+                    </tr>
+                    <tr> 
+                      <td width="80" align="right" class="body_td_gray">连接数：</td>
+                      <td colspan="3" align="left" class="body_td_gray"> 
+                        <% $network_link_num %>
+                      </td>
+                    </tr>
+                    <tr> 
+                      <td colspan="4" class="body_line"></td>
+                    </tr>
+                    <tr> 
+                      <td align="right" class="body_td_gray_two">等待数：</td>
+                      <td colspan="3" class="body_td_gray_two"> 
+                        <% $newwork_wait_num %>
+                      </td>
+                    </tr>
+                    <tr> 
+                      <td colspan="4" class="body_line"></td>
+                    </tr>
+                    <tr> 
+                      <td class="body_td_gray">&nbsp;</td>
+                      <td class="body_td_gray">接口名称 </td>
+                      <td class="body_td_gray">接口带宽 </td>
+                      <td class="body_td_gray">接口错误包</td>
+                    </tr>
+                    <% foreach value=v key=k from=$newwork %>
+                    <tr> 
+                      <td colspan="4" class="body_line"></td>
+                    </tr>
+                    <tr> 
+                      <td class="body_td_gray_two">&nbsp; </td>
+                      <td class="body_td_gray_two">
+                        <% $v[newwork_name] %>
+                      </td>
+                      <td class="body_td_gray_two"> 
+                        <% $v[newwork_width] %>
+                        pkts/min </td>
+                      <td class="body_td_gray_two"> 
+                        <% $v[newwork_error_num] %>
+                      </td>
+                    </tr>
+                    <% /foreach %>
+                  </table></td>
+              </tr>
+            </table>
+<table width="100%" height="6" border="0" cellpadding="0" cellspacing="0" class="img_table">
+        <tr>
+			<td><img src="img/onlook_76.gif" class="body_hr"></td>
+		  </tr>
+		</table>
+		<div class="right_hr"></div>
+		<% elseif $page_type=="oracle" %>
+            <table width="100%" border="0" cellpadding="1" cellspacing="0"  class="body_table">
+              <tr align="left"> 
+                <th>&nbsp;[<a href="host_performance.php?hostid=<% $hostid %>&page_type=oracle" class="a_select"><font size="4">Oracle</font></a>]</th>
+              </tr>
+              <tr valign="top"> 
+                <td> <table width="100%" border="0" cellpadding="0" cellspacing="0">
+                    <tr> 
+                      <th colspan="7" align="left" class="body_th">[SGA]</th>
+                    </tr>
+                    <tr> 
+                      <td width="150" class="body_td_gray">Total size</td>
+                      <td align="left" class="body_td_gray">Share_pool_size</td>
+                      <td align="left" class="body_td_gray">Java_pool_size</td>
+                      <td align="left" class="body_td_gray">Large_pool_size</td>
+                      <td align="left" class="body_td_gray">Data_cache_size</td>
+                      <td align="left" class="body_td_gray">Log_buffer size</td>
+                      <td align="left" class="body_td_gray">Shared pool used</td>
+                    </tr>
+                    <tr> 
+                      <td colspan="7" class="body_line"></td>
+                    </tr>
+                    <tr> 
+                      <td class="body_td_gray_two">&nbsp; 
+                        <% $sga_size %>
+                      </td>
+                      <td class="body_td_gray_two"> 
+                        <% $sga_sp %>
+                      </td>
+                      <td class="body_td_gray_two"> 
+                        <% $sga_jp %>
+                      </td>
+                      <td class="body_td_gray_two">
+                        <% $sga_lp %>
+                      </td>
+                      <td class="body_td_gray_two">
+                        <% $sga_db %>
+                      </td>
+                      <td class="body_td_gray_two">
+                        <% $sga_lb %>
+                      </td>
+                      <td class="body_td_gray_two">
+                        <% $sga_sp %>
+                      </td>
+                    </tr>
+                  </table></td>
+              </tr>
+              <tr valign="top"> 
+                <td> <table width="100%" border="0" cellpadding="0" cellspacing="0">
+                    <tr> 
+                      <th colspan="5" align="left" class="body_th">[PGA]</th>
+                    </tr>
+                    <tr> 
+                      <td width="150" class="body_td_gray">Bitmap_merge_area_size</td>
+                      <td width="150" align="left" class="body_td_gray">Create_bitmap_area_size</td>
+                      <td align="left" class="body_td_gray">Hash_area_size</td>
+                      <td align="left" class="body_td_gray">Sort_area_size</td>
+                      <td align="left" class="body_td_gray">Sort_area_retained_size</td>
+                    </tr>
+                    <tr> 
+                      <td colspan="5" class="body_line"></td>
+                    </tr>
+                    <tr> 
+                      <td class="body_td_gray_two">&nbsp;
+                      <% $Bitmap_merge_area_size %></td>
+                      <td class="body_td_gray_two"><% $Create_bitmap_area_size %></td>
+                      <td class="body_td_gray_two"><% $Hash_area_size %></td>
+                      <td class="body_td_gray_two"><% $Sort_area_size %></td>
+                      <td class="body_td_gray_two"><% $Sort_area_retained_size %></td>
+                    </tr>
+                  </table></td>
+              </tr>
+              <tr valign="top"> 
+                <td> <table width="100%" border="0" cellpadding="0" cellspacing="0">
+                    <tr> 
+                      <th colspan="5" align="left" class="body_th">[Server Processes]</th>
+                    </tr>
+                    <tr> 
+                      <td width="150" class="body_td_gray">Dedicated</td>
+                      <td width="150" align="left" class="body_td_gray">Shared</td>
+                      <td align="left" class="body_td_gray">Dispatchers</td>
+                      <td align="left" class="body_td_gray">Parallel Query</td>
+                      <td align="left" class="body_td_gray">Job Queue</td>
+                    </tr>
+                    <tr> 
+                      <td colspan="5" class="body_line"></td>
+                    </tr>
+                    <tr> 
+                      <td class="body_td_gray_two">&nbsp; 
+                        <% $servproc_dedicated %>
+                      </td>
+                      <td class="body_td_gray_two"> 
+                        <% $servproc_shared %>
+                      </td>
+                      <td class="body_td_gray_two"> 
+                        <% $servproc_dispatchers %>
+                      </td>
+                      <td class="body_td_gray_two">
+                        <% $servproc_pq %>
+                      </td>
+                      <td class="body_td_gray_two">
+                        <% $servproc_jobs %>
+                      </td>
+                    </tr>
+                  </table></td>
+              </tr>
+              <tr valign="top"> 
+                <td> <table width="100%" border="0" cellpadding="0" cellspacing="0">
+                    <tr> 
+                      <th colspan="3" align="left" class="body_th">[Session]</th>
+                    </tr>
+                    <tr> 
+                      <td width="150" class="body_td_gray">Total system sessions</td>
+                      <td width="150" align="left" class="body_td_gray">Inactive 
+                        users sessions</td>
+                      <td align="left" class="body_td_gray">Active users sessions</td>
+                    </tr>
+                    <tr> 
+                      <td colspan="3" class="body_line"></td>
+                    </tr>
+                    <tr> 
+                      <td class="body_td_gray_two">&nbsp; 
+                        <% $total_system_sessions %>
+                      </td>
+                      <td class="body_td_gray_two"> 
+                        <% $inaction_users_sessions %>
+                      </td>
+                      <td class="body_td_gray_two"> 
+                        <% $action_users_sessions %>
+                      </td>
+                    </tr>
+                  </table></td>
+              </tr>
+              <tr valign="top"> 
+                <td><table width="100%" border="0" cellpadding="0" cellspacing="0">
+                    <tr> 
+                      <th colspan="5" align="left" class="body_th">[Log table]</th>
+                    </tr>
+                    <tr> 
+                      <td width="150" class="body_td_gray">Group id</td>
+                      <td width="250" align="left" class="body_td_gray">
+<div style="width:150px"> Path </div></td>
+                      <td align="left" class="body_td_gray">Status</td>
+                      <td align="left" class="body_td_gray">Size</td>
+                      <td align="left" class="body_td_gray">Archive</td>
+                    </tr>
+                    <tr> 
+                      <td colspan="5" class="body_line"></td>
+                    </tr>
+                    <tr> 
+                      <td class="body_td_gray_two"> 
+                        <% $log_group1 %>
+                      </td>
+                      <td class="body_td_gray_two"><div style="width:250px"> 
+                          <% $log_path1 %>
+                        </div></td>
+                      <td class="body_td_gray_two"> 
+                        <% $log_status1 %>
+                      </td>
+                      <td class="body_td_gray_two"> 
+                        <% $log_size1 %>
+                      </td>
+                      <td class="body_td_gray_two"> 
+                        <% $log_archived1 %>
+                      </td>
+                    </tr>
+                    <tr> 
+                      <td class="body_td_gray">
+                        <% $log_group2 %>
+                      </td>
+                      <td align="left" class="body_td_gray"><div style="width:250px"> 
+                          <% $log_path2 %>
+                        </div></td>
+                      <td align="left" class="body_td_gray">
+                        <% $log_status2 %>
+                      </td>
+                      <td align="left" class="body_td_gray">
+                        <% $log_size2 %>
+                      </td>
+                      <td align="left" class="body_td_gray">
+                        <% $log_archived2 %>
+                      </td>
+                    </tr>
+                    <tr> 
+                      <td colspan="5" class="body_line"></td>
+                    </tr>
+                    <tr> 
+                      <td class="body_td_gray_two"> 
+                        <% $log_group3 %>
+                      </td>
+                      <td class="body_td_gray_two"><div style="width:250px"> 
+                          <% $log_path3 %>
+                        </div></td>
+                      <td class="body_td_gray_two"> 
+                        <% $log_status3 %>
+                      </td>
+                      <td class="body_td_gray_two"> 
+                        <% $log_size3 %>
+                      </td>
+                      <td class="body_td_gray_two"> 
+                        <% $log_archived3 %>
+                      </td>
+                    </tr>
+
+                  </table></td>
+              </tr>
+              <tr valign="top"> 
+                <td><table width="100%" border="0" cellpadding="0" cellspacing="0">
+                    <tr> 
+                      <th colspan="2" align="left" class="body_th">[Controlfile 
+                        table]</th>
+                    </tr>
+                    <tr> 
+                      <td width="150" class="body_td_gray">Status</td>
+                      <td align="left" class="body_td_gray"><div style="width:250px"> 
+                          &nbsp;Name </div></td>
+                    </tr>
+                    <tr> 
+                      <td colspan="2" class="body_line"></td>
+                    </tr>
+                    <tr> 
+                      <td class="body_td_gray_two"> 
+                        <% $cf_status1 %>
+                      </td>
+                      <td class="body_td_gray_two"><div style="width:250px"> 
+                          <% $cf_name1 %>
+                        </div></td>
+                    </tr>
+                    <tr> 
+                      <td class="body_td_gray">
+                        <% $cf_status2 %>
+                      </td>
+                      <td align="left" class="body_td_gray"><div style="width:250px"> 
+                          <% $cf_name2 %>
+                        </div></td>
+                    </tr>
+                    <tr> 
+                      <td colspan="2" class="body_line"></td>
+                    </tr>
+                    <tr> 
+                      <td class="body_td_gray_two"> 
+                        <% $cf_status3 %>
+                      </td>
+                      <td class="body_td_gray_two"><div style="width:250px"> 
+                          <% $cf_name3 %>
+                        </div></td>
+                    </tr>
+
+                  </table></td>
+              </tr>
+              <tr valign="top"> 
+                <td><table width="100%" border="0" cellpadding="0" cellspacing="0">
+                    <tr> 
+                      <th colspan="6" align="left" class="body_th">[Performance]</th>
+                    </tr>
+                    <tr> 
+                      <td width="150" class="body_td_gray">Buffer hit %</td>
+                      <td width="150" align="left" class="body_td_gray">
+<div style="width:150px">Library hit %</div></td>
+                      <td align="left" class="body_td_gray">Execute to Parse %</td>
+                      <td align="left" class="body_td_gray">Redo NoWait %</td>
+                      <td align="left" class="body_td_gray">In-memory Sort %</td>
+                      <td align="left" class="body_td_gray">Latch Hit %</td>
+                    </tr>
+                    <tr> 
+                      <td colspan="6" class="body_line"></td>
+                    </tr>
+                    <tr> 
+                      <td class="body_td_gray_two"> 
+                        <% $buffer_hit %>
+                      </td>
+                      <td class="body_td_gray_two"><div style="width:150px"> 
+                          <% $library_hit %>
+                        </div></td>
+                      <td class="body_td_gray_two"> 
+                        <% $execute_to_parse %>
+                      </td>
+                      <td class="body_td_gray_two"> 
+                        <% $redo_nowait %>
+                      </td>
+                      <td class="body_td_gray_two"> 
+                        <% $in_memory_sort %>
+                      </td>
+                      <td class="body_td_gray_two"> 
+                        <% $latch_hit %>
+                      </td>
+                    </tr>
+                  </table></td>
+              </tr>
+              <tr valign="top"> 
+                <td><table width="100%" border="0" cellpadding="0" cellspacing="0">
+                    <tr> 
+                      <th colspan="8" align="left" class="body_th">[TOP 10 tablespace 
+                        table]</th>
+                    </tr>
+                    <tr> 
+                      <td colspan="8" class="body_line"></td>
+                    </tr>
+                    <tr> 
+                      <td width="150" class="body_td_gray">Tablespace name：</td>
+                      <td width="150" align="left" class="body_td_gray">Path： </td>
+                      <td align="left" class="body_td_gray">Size(M)</td>
+                      <td align="left" class="body_td_gray">Used %</td>
+                      <td align="left" class="body_td_gray">Type</td>
+                      <td align="left" class="body_td_gray">Status</td>
+                      <td align="left" class="body_td_gray">Extent Managent</td>
+                      <td align="left" class="body_td_gray">&nbsp;</td>
+                    </tr>
+					<% foreach value=v key=k from=$tbs_tables %>
+                    <tr> 
+                      <td colspan="8" class="body_line"></td>
+                    </tr>
+                    <tr> 
+                      <td class="body_td_gray_two"> 
+                        <% $v[tbs_name] %>
+                      </td>
+                      <td class="body_td_gray_two"><% $v[tbs_path] %></td>
+                      <td class="body_td_gray_two"> 
+                        <% $v[tbs_size] %>
+                      </td>
+                      <td class="body_td_gray_two"> 
+                        <% $v[tbs_used] %>
+                      </td>
+                      <td class="body_td_gray_two"> 
+                        <% $v[tbs_type] %>
+                      </td>
+                      <td class="body_td_gray_two"> 
+                        <% $v[tbs_status] %>
+                      </td>
+                      <td class="body_td_gray_two"> 
+                        <% $v[tbs_extman] %>
+                      </td>
+                      <td class="body_td_gray_two">&nbsp;</td>
+                    </tr>
+                    <% /foreach %>
+                  </table></td>
+              </tr>
+            </table>
+            <table width="100%" height="6" border="0" cellpadding="0" cellspacing="0" class="img_table">
+          <tr>
+			<td><img src="img/onlook_76.gif" class="body_hr"></td>
+		  </tr>
+		</table>
+		<div class="right_hr"></div>
+		<% elseif $page_type=="cisco" %>
+		    <table width="100%" border="0" cellpadding="1" cellspacing="0"  class="body_table">
+              <tr align="left"> 
+                <th>[<a href="host_performance.php?hostid=<% $hostid %>&page_type=cisco" class="a_select"><font size="4">Cisco</font></a>]</th>
+              </tr>
+              <tr valign="top"> 
+                <td> <table width="100%" border="0" cellpadding="0" cellspacing="0">
+                    <tr> 
+                      <th colspan="2" align="left" class="body_th">[设备]</th>
+                    </tr>
+                    <tr> 
+                      <td width="100" align="right" class="body_td_gray">设备名：</td>
+                      <td align="left" class="body_td_gray">
+                        <% $sysName %>
+                      </td>
+                    </tr>
+                    <tr> 
+                      <td colspan="2" class="body_line"></td>
+                    </tr>
+                    <tr> 
+                      <td align="right" class="body_td_gray_two">&nbsp;IP地址：</td>
+                      <td class="body_td_gray_two">
+                        <% $host_ip %>
+                      </td>
+                    </tr>
+                    <tr> 
+                      <td colspan="2" class="body_line"></td>
+                    </tr>
+                    <tr> 
+                      <td align="right" class="body_td_gray">系统描述：</td>
+                      <td class="body_td_gray">
+                        <% $sysDescr %>
+                      </td>
+                    </tr>
+                    <tr> 
+                      <td colspan="2" class="body_line"></td>
+                    </tr>
+                    <tr> 
+                      <td align="right" class="body_td_gray_two">系统运行时间：</td>
+                      <td class="body_td_gray_two">
+                        <% $sysUpTime %>
+                      </td>
+                    </tr>
+                    <tr> 
+                      <td colspan="2" class="body_line"></td>
+                    </tr>
+                  </table></td>
+              </tr>
+              <tr valign="top"> 
+                <td> <table width="100%" border="0" cellpadding="0" cellspacing="0">
+                    <tr> 
+                      <th colspan="2" align="left" class="body_th">[网络]</th>
+                    </tr>
+                    <tr> 
+                      <td width="100" align="right" class="body_td_gray">接口数目：</td>
+                      <td align="left" class="body_td_gray">
+                        <% $ifNumber %>
+                      </td>
+                    </tr>
+                    <tr> 
+                      <td colspan="2" class="body_line"></td>
+                    </tr>
+                    <tr> 
+                      <td align="right" class="body_td_gray_two">转发数据包数：</td>
+                      <td class="body_td_gray_two"><div style="width:150px">
+                          <% $ipForwarding %>
+                        </div></td>
+                    </tr>
+                    <tr> 
+                      <td colspan="2" class="body_line"></td>
+                    </tr>
+                    <tr> 
+                      <td align="right" class="body_td_gray">输入数据包数：</td>
+                      <td class="body_td_gray"><div style="width:150px">
+                          <% $ipInReceives %>
+                        </div></td>
+                    </tr>
+                    <tr> 
+                      <td colspan="2" class="body_line"></td>
+                    </tr>
+                    <tr> 
+                      <td align="right" class="body_td_gray">输入丢弃数：</td>
+                      <td class="body_td_gray"><div style="width:150px">
+                          <% $ipInDiscards %>
+                        </div></td>
+                    </tr>
+                    <tr> 
+                      <td colspan="2" class="body_line"></td>
+                    </tr>
+                    <tr> 
+                      <td align="right" class="body_td_gray">输出数据包数：</td>
+                      <td class="body_td_gray"><div style="width:150px">
+                          <% $ipOutRequests %>
+                        </div></td>
+                    </tr>
+                    <tr> 
+                      <td colspan="2" class="body_line"></td>
+                    </tr>
+                    <tr> 
+                      <td align="right" class="body_td_gray">输出丢弃数：</td>
+                      <td class="body_td_gray">
+                        <% $ipOutDiscards %>
+                      </td>
+                    </tr>
+                  </table></td>
+              </tr>
+              <tr valign="top"> 
+                <td>
+				<table width="100%" border="0" cellpadding="0" cellspacing="0">
+                    <tr> 
+                      <th colspan="6" align="left" class="body_th">[接口列表]</th>
+                    </tr>
+                    <tr>
+					  <td>
+					  	<div style="overflow:auto;heiht:100px;">
+						  <table width="100%" border="0" cellpadding="0" cellspacing="0">
+							<tr> 
+							  <td width="100" class="body_td_gray">序号</td>
+							  <td width="100" class="body_td_gray">名称 </td>
+							  <td width="100" class="body_td_gray">速度</td>
+							  <td width="100" class="body_td_gray">状态</td>
+							  <td class="body_td_gray">输入字节数</td>
+							  <td class="body_td_gray">输出字节数</td>
+							  <td class="body_td_gray">物理地址</td>
+							</tr>
+							<% foreach value=v key=k from=$ip_arr %>
+							<tr> 
+							  <td colspan="7" class="body_line"></td>
+							</tr>
+							<tr> 
+							  <td class="body_td_gray_two">
+								<% $v[ifIndex] %>
+							  </td>
+							  <td class="body_td_gray_two">
+								<% $v[ifDescr] %>
+							  </td>
+							  <td class="body_td_gray_two">
+								<% $v[ifSpeed] %>
+							  </td>
+							  <td class="body_td_gray_two">
+								<% $v[ifOperStatus] %>
+							  </td>
+							  <td class="body_td_gray_two">
+								<% $v[ifInOctets] %>
+							  </td>
+							  <td class="body_td_gray_two">
+								<% $v[ifOutOctets] %>
+							  </td>
+							  <td class="body_td_gray_two">
+								<% $v[ifPhysAddress] %>
+							  </td>
+							</tr>
+							<% /foreach %>
+							</table>
+							</div>
+					  </td>
+					</tr>
+                  </table></td>
+              </tr>
+			  <tr valign="top"><td>
+			  <table width="100%" border="0" cellpadding="0" cellspacing="0">
+                    <tr> 
+                      <th colspan="4" align="left" class="body_th">[路由列表]</th>
+                    </tr>
+                   <tr>
+					  <td>
+					  	<div style="overflow:auto;heiht:100px;">
+						  <table width="100%" border="0" cellpadding="0" cellspacing="0">
+						<tr> 
+						  <td width="100" class="body_td_gray">目的网络</td>
+						  <td width="100" class="body_td_gray">网络掩码</td>
+						  <td width="100" class="body_td_gray">下一跳地址</td>
+						  <td class="body_td_gray">路由类型输出字节数物理地址</td>
+						</tr>
+						<% foreach value=v key=k from=$iproute_arr %>
+						<tr> 
+						  <td colspan="4" class="body_line"></td>
+						</tr>
+						<tr> 
+						  <td class="body_td_gray_two">
+							<% $v[ipRouteDest] %>
+						  </td>
+						  <td class="body_td_gray_two">
+							<% $v[ipRouteMask] %>
+						  </td>
+						  <td class="body_td_gray_two">
+							<% $v[ipRouteNextHop] %>
+						  </td>
+						  <td class="body_td_gray_two">
+							<% $v[ipRouteType] %>
+						  </td>
+						</tr>
+						<% /foreach %>
+						</table>
+						</div>
+						</td>
+					</tr>
+                  </table>
+				  </td></tr>
+            </table>
+		<% /if %>
+		  </td>
+        </tr></table>
+		<!--设备列表结束-->
+		</td>
+	<td width="8" background="img/right_bg.gif">&nbsp;</td>
+  </tr>
+  <tr>
+  	<td width="9" height="58" background="img/left_bg.gif">&nbsp;</td>
+  	<td colspan="2"><% include file="bottom_tpl.htm"%></td>
+  	<td width="8" background="img/right_bg.gif">&nbsp;</td>
+  </tr>
+</table>
+</body>
+</html>

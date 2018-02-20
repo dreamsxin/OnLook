@@ -1,0 +1,261 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>设置 -<% $web_name %></title>
+<link href="css/inc.css" rel="stylesheet" type="text/css">
+<script src="js/tool.js" charset="utf-8" type="text/javascript" language="javascript"></script>
+<script src="js/dreamsdiv.js" charset="utf-8" type="text/javascript" language="javascript"></script>
+</head>
+
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+  	<td width="9" height="58" background="img/left_bg.gif">&nbsp;</td>
+  	<td colspan="2"><% include file="top_tpl.htm"%></td>
+  	<td width="8" background="img/right_bg.gif">&nbsp;</td>
+  </tr>
+  <tr>
+  	<td width="9" height="58" background="img/left_bg.gif">&nbsp;</td>
+    <td width="149" valign="top"> 
+      <% include file="left_tpl.htm"%>
+    </td>
+    <td valign="top"> 
+	  <% if $page_type=="depends" %>
+      <table width="100%" border="0" cellpadding="0" cellspacing="0" class="body_table">
+        <tr> 
+          <th colspan="4" align="left" class="body_th">[<a href="action_admin.php?triggerid=<% $triggerid %>&page_type=depends" class="a_select">依赖项</a>]&nbsp;&nbsp;[<a href="action_admin.php?triggerid=<% $triggerid %>&page_type=actions">处理方式</a>]</th>
+        </tr>
+        <tr> 
+          <td width="40%" class="body_td_gray">&nbsp;依赖项名称</td>
+          <td width="40%" class="body_td_gray">告警条件</td>
+          <td width="50" class="body_td_gray">状态</td>
+          <td class="body_td_gray">&nbsp;操作</td>
+        </tr>
+		<% if $count_depends > 0 %>
+        <% foreach value=v key=k from=$arr_trigger_depends %>
+        <tr> 
+          <td colspan="4" class="body_line"></td>
+        </tr>
+        <tr class="<% cycle name=group_row values="body_td_gray_two,body_td_gray" %>"> 
+          <td>&nbsp;<a href="trigger_admin.php?s_triggerid=<% $v[triggerid] %>"><% $v[description] %></a></td>
+          <td><% $v[expression]|explode_exp:0 %></td>
+          <td> <% if $v[status]==0 %>已启用 <% else %>未启用 <% /if %></td>
+          <td>&nbsp;<a href="action_admin.php?action=del&triggerid=<% $v[triggerid_down] %>&triggerid_up=<% $v[triggerid_up] %>">删除此依赖关系</a>
+            </a></td>
+        </tr>
+        <% /foreach %>
+		<% /if %>
+      </table> 
+      <table width="100%" height="6" border="0" cellpadding="0" cellspacing="0" class="img_table">
+        <tr>
+			<td><img src="img/onlook_76.gif" class="body_hr"></td>
+		  </tr>
+		</table>
+		<div class="right_hr"></div>
+      <table width="100%" border="0" cellpadding="0" cellspacing="0" class="body_table">
+        <tr> 
+          <th id="trigger_depends_title" colspan="3" align="left" class="body_th">添加依赖项</th>
+        </tr>
+        <form id="trigger_depends_form" action="action_admin.php?action=add&triggerid=<% $triggerid %>" method="post">
+          <tr> 
+            <th width="200" class="body_td_gray">依赖项列表</th>
+            <td width="300" class="body_td_gray"><select name="triggerid_up" id="triggerid_up">
+				<% $last_host="" %>
+                <% foreach value=v key=k from=$arr_triggers %>
+				<option value="<% $v[triggerid] %>"><% $v[host] %> &nbsp;&nbsp;&nbsp;&nbsp;-- <% $v[description] %></option>
+				<% $last_host=$v[hostid] %>
+				<% /foreach %>
+              </select> </td>
+            <td class="body_td_gray">&nbsp;</td>
+          </tr>
+          <tr> 
+            <td colspan="3" class="body_line"></td>
+          </tr>
+          <tr> 
+            <th class="body_td_gray_two">&nbsp;</th>
+            <td class="body_td_gray_two"><input name="trigger_depends_btn" type="button" class="button_input" id="trigger_depends_btn" onClick="dreams_ck_form('','trigger_depends_form','alert')" value="添加">
+            </td>
+            <td class="body_td_gray_two">&nbsp;</td>
+          </tr>
+        </form>
+      </table>
+      <table width="100%" height="6" border="0" cellpadding="0" cellspacing="0" class="img_table">
+        <tr>
+			<td><img src="img/onlook_76.gif" class="body_hr"></td>
+		  </tr>
+		</table>
+		<div class="right_hr"></div>
+      <% /if %>
+	  <% if $page_type=="actions" %>
+      <table width="100%" border="0" cellpadding="0" cellspacing="0" class="body_table">
+        <tr> 
+          <th colspan="6" align="left" class="body_th">[<a href="action_admin.php?triggerid=<% $triggerid %>&page_type=depends">依赖项</a>]&nbsp;&nbsp;[<a href="action_admin.php?triggerid=<% $triggerid %>&page_type=actions" class="a_select">处理方式</a>]</th>
+        </tr>
+        <tr>           
+          <td width="200" class="body_td_gray">发送消息到</td>
+          <td width="50" class="body_td_gray">触发时</td>
+          <td width="50" class="body_td_gray">&nbsp;延迟</td>
+          <td class="body_td_gray">消息标题</td>
+		  <td class="body_td_gray">&nbsp;范围</td>
+          <td class="body_td_gray">操作</td>
+        </tr>
+		<% if $count_actions > 0 %>
+        <% foreach value=v key=k from=$arr_actions %>
+        <tr> 
+          <td colspan="6" class="body_line"></td>
+        </tr>
+        <tr class="<% cycle name=group_row values="body_td_gray_two,body_td_gray" %>"> 
+          <td>&nbsp;<% if $v[recipient]==0 %><% $v[username] %>(单一用户)<% else %><% $v[groupname] %>(用户组)<% /if %></td>
+          <td>
+            <% if $v[good]==1 %>
+            开
+			<% elseif $v[good]==0 %>
+			关
+            <% else %>
+            开或不开
+            <% /if %>
+          </td>
+          <td> 
+            <% $v[delay] %>秒
+          </td>
+          <td><% $v[subject] %></td>
+          <td><% if $v[scope]==0 %>只适用于该触发<% /if %>
+              <% if $v[scope]==1 %>适用于该主机的所有触发<% /if %>
+              <% if $v[scope]==2 %>适用于所有触发<% /if %></td>
+          <td><span class="a_span" onClick="action_edit('<% $v[actionid] %>','<% $v[recipient] %>','<% $v[userid] %>','<% $v[good] %>','<% $v[delay] %>','<% $v[subject]|htmltostr %>','<% $v[message]|htmltostr %>','<% $v[scope] %>','<% $v[severity] %>','<% $v[triggerid] %>')">修改</span> <a href="action_admin.php?action=action_del&triggerid=<% $v[triggerid] %>&actionid=<% $v[actionid] %>">删除</a> 
+            <span class="a_span" onClick="action_add('<% $v[triggerid] %>')">添加</span></td>
+        </tr>
+        <% /foreach %>
+		<% /if %>
+      </table> 
+      <table width="100%" height="6" border="0" cellpadding="0" cellspacing="0" class="img_table">
+        <tr>
+			<td><img src="img/onlook_76.gif" class="body_hr"></td>
+		  </tr>
+		</table>
+		<div class="right_hr"></div>
+      <table width="100%" border="0" cellpadding="0" cellspacing="0" class="body_table">
+        <tr> 
+          <th id="action_title" colspan="3" align="left" class="body_th">添加处理方式</th>
+        </tr>
+        <form id="action_form" action="action_admin.php?action=action_add&triggerid=<% $triggerid %>" method="post">
+          <tr> 
+            <th width="200" class="body_td_gray">发送消息到</th>
+            <td class="body_td_gray">
+<select name="recipient" id="recipient" onChange="change_recipient(this.value)">
+                <option value="0" selected>单一用户</option>
+                <option value="1">用户组</option>
+              </select> <select name="usrgrpid" id="usrgrpid" style="display:none">
+			  	<% foreach value=v key=k from=$arr_usrgrp %>
+                <option value="<% $v[usrgrpid] %>"><% $v[name] %></option>
+				<% /foreach %>
+              </select> <select name="userid" id="userid">
+			  	<% foreach value=v key=k from=$arr_users %>
+                <option value="<% $v[userid] %>"><% $v[name] %></option>
+				<% /foreach %>
+              </select>
+            </td>
+            <td class="body_td_gray">&nbsp;</td>
+          </tr>
+          <tr> 
+            <td colspan="3" class="body_line"></td>
+          </tr>
+          <tr> 
+            <th width="200" class="body_td_gray_two">触发时</th>
+            <td class="body_td_gray_two">
+<select name="good" id="good">
+                <option value="1" selected>开</option>
+                <option value="0">关</option>
+                <option value="2">开或关</option>
+              </select>
+            </td>
+            <td class="body_td_gray_two">&nbsp;</td>
+          </tr>
+          <tr> 
+            <td colspan="3" class="body_line"></td>
+          </tr>
+          <tr> 
+            <th width="200" class="body_td_gray">消息之间的延迟 (秒)</th>
+            <td class="body_td_gray">
+<input name="delay" type="text" id="delay" value="30" class="text_input" msg_name="消息之间的延迟" notnull="true" isnum="true">
+            </td>
+            <td class="body_td_gray">&nbsp;</td>
+          </tr>
+          <tr> 
+            <td colspan="3" class="body_line"></td>
+          </tr>
+          <tr> 
+            <th width="200" class="body_td_gray_two">消息标题</th>
+            <td class="body_td_gray_two"><input name="subject" type="text" class="text_input" id="subject" value="<% $subject %>" size="83" msg_name="消息标题" notnull="true"> 
+            </td>
+            <td class="body_td_gray_two">&nbsp;</td>
+          </tr>
+          <tr> 
+            <td colspan="3" class="body_line"></td>
+          </tr>
+          <tr> 
+            <th width="200" class="body_td_gray">消息内容</th>
+            <td class="body_td_gray">
+<textarea name="message" cols="70" rows="5" class="text_input" id="message" msg_name="消息内容" notnull="true"><% $message %></textarea>
+            </td>
+            <td class="body_td_gray">&nbsp;</td>
+          </tr>
+          <tr> 
+            <td colspan="3" class="body_line"></td>
+          </tr>
+          <tr> 
+            <th width="200" class="body_td_gray_two">范围</th>
+            <td class="body_td_gray_two"> 
+              <select id="scope" name="scope" onChange="change_scope(this.value)">
+                <option value="0" selected>只适用于该触发</option>
+                <option value="1">适用于该主机的所有触发</option>
+                <option value="2">适用于所有触发</option>
+              </SELECT> </td>
+            <td class="body_td_gray_two">&nbsp;</td>
+          </tr>
+          <tr> 
+            <td colspan="3" class="body_line"></td>
+          </tr>
+          <tr> 
+            <th width="200" class="body_td_gray">触发严重级别相同或更高时使用</th>
+            <td class="body_td_gray"> 
+              <select id="severity" name="severity" disabled="true" class="disabled_input">
+                <option value="0" selected>未分类</option>
+                <option value="1">普通信息</option>
+                <option value="2">警告</option>
+                <option value="3">一般告警</option>
+                <option value="4">严重告警</option>
+                <option value="5">重大告警</option>
+              </SELECT></td>
+            <td class="body_td_gray">&nbsp;</td>
+          </tr>
+          <tr> 
+            <td colspan="3" class="body_line"></td>
+          </tr>
+          <tr> 
+            <th class="body_td_gray_two">&nbsp;</th>
+            <td class="body_td_gray_two"><input name="action_btn" type="button" class="button_input" id="action_btn" onClick="dreams_ck_form('delay,subject,message','action_form','alert')" value="添加"> 
+              <input name="actionid" type="hidden" id="actionid"></td>
+            <td class="body_td_gray_two">&nbsp;</td>
+          </tr>
+        </form>
+      </table>
+      <table width="100%" height="6" border="0" cellpadding="0" cellspacing="0" class="img_table">
+        <tr>
+			<td><img src="img/onlook_76.gif" class="body_hr"></td>
+		  </tr>
+		</table>
+		<div class="right_hr"></div>
+		<% /if %>
+	</td>
+	<td width="8" background="img/right_bg.gif">&nbsp;</td>
+  </tr>
+  <tr>
+  	<td width="9" height="58" background="img/left_bg.gif">&nbsp;</td>
+  	<td colspan="2"><% include file="bottom_tpl.htm"%></td>
+  	<td width="8" background="img/right_bg.gif">&nbsp;</td>
+  </tr>
+</table>
+</body>
+</html>
